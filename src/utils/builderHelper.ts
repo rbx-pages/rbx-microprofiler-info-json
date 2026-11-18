@@ -9,6 +9,8 @@ export const STR_TagGroups = {
     Input: "Input",
     Jobs: "Jobs",
     LuaBridge: "LuaBridge",
+    MicroProfiler: "MicroProfiler",
+    Network: "Network",
     Physics: "Physics",
     Render: "Render",
     Runtime: "Runtime",

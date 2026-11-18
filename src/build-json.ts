@@ -1,6 +1,10 @@
 import fs from "fs"
 //import { TagDataBuilder, TagDataClasses } from "./builderOut.js"
 //import TagInfoBuilder from "https://example.com"
+import _tags from "./tags/index.ts"
+
+// ---
+
 import builderHelper from "./utils/builderHelper"
 
 const TagDataClasses = builderHelper.TagDataClasses

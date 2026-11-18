@@ -5,7 +5,7 @@ import _tags from "./tags/index.ts"
 
 // ---
 
-import builderHelper from "./utils/builderHelper"
+import builderHelper, {STR_TagGroups} from "./utils/builderHelper"
 
 const TagDataClasses = builderHelper.TagDataClasses
 const TagDataBuilder = builderHelper.TagDataBuilder

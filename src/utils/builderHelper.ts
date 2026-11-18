@@ -1,6 +1,6 @@
 import { TagDataBuilder, TagDataClasses } from "../builderOut.js"
 
-const builder = new TagDataBuilder();
+let builder = new TagDataBuilder();
 
 export const STR_TagGroups = {  
   LuaBridge: "LuaBridge",

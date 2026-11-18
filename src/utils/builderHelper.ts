@@ -4,14 +4,16 @@ let builder = new TagDataBuilder();
 
 export const STR_TagGroups = {
     App: "App",
-    Systems: "Systems",
-    Jobs: "Jobs",
     Heartbeat: "Heartbeat",
+    Input: "Input",
+    Jobs: "Jobs",
     LuaBridge: "LuaBridge",
-    Script: "Script",
     Physics: "Physics",
     Render: "Render",
-    Input: "Input",
+    Runtime: "Runtime",
+    Script: "Script",
+    Systems: "Systems",
+    UI: "UI",
     Voice: "Voice",
 }
 

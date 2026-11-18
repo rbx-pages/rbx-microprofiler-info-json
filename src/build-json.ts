@@ -1,15 +1,11 @@
-import { TagDataBuilder, TagDataClasses } from "./builderOut.js"
+//import { TagDataBuilder, TagDataClasses } from "./builderOut.js"
 //import TagInfoBuilder from "https://example.com"
+import { TagDataBuilder, TagDataClasses, TagTokenEntry, TagGroupEntry, TagLabel } from "./utils/builderHelper.ts"
 import fs from "fs"
 
 //
 // Do NOT remove content above
 //
-
-const TagTokenEntry = TagDataClasses.TagTokenEntry
-const TagGroupEntry = TagDataClasses.TagGroupEntry
-const TagLabel = TagDataClasses.TagLabel
-
 
 let builder = new TagDataBuilder()
 

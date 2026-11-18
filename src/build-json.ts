@@ -6,7 +6,7 @@ console.log(_tags)
 
 // ---
 
-import builderHelper, {STR_TagGroups} from "./utils/builderHelper"
+import builderHelper, {STR_TagGroups} from "./utils/builderHelper.ts"
 
 const TagDataClasses = builderHelper.TagDataClasses
 const TagDataBuilder = builderHelper.TagDataBuilder

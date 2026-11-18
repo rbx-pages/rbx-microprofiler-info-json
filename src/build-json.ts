@@ -2,7 +2,11 @@ import fs from "fs"
 //import { TagDataBuilder, TagDataClasses } from "./builderOut.js"
 //import TagInfoBuilder from "https://example.com"
 import _tags from "./tags/index.ts"
-console.log(_tags)
+{
+    function stub() {}
+    stub(_tags) // We need to give it a reason to run
+}
+
 
 // ---
 

@@ -1,8 +1,5 @@
-import * as Physics from "./physics.ts"
-import * as Render from "./render.ts"
-
-
-export default {
-  Physics,
-  Render
-};
+export * as App from "./App.ts"
+export * as Systems from "./Systems.ts"
+export * as LuaBridge from "./LuaBridge.ts"
+export * as Physics from "./Physics.ts"
+export * as Render from "./Render.ts"

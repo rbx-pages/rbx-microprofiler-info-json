@@ -2,6 +2,7 @@ import fs from "fs"
 //import { TagDataBuilder, TagDataClasses } from "./builderOut.js"
 //import TagInfoBuilder from "https://example.com"
 import _tags from "./tags/index.ts"
+console.log(_tags)
 
 // ---
 

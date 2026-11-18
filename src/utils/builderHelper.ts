@@ -4,6 +4,7 @@ let builder = new TagDataBuilder();
 
 export const STR_TagGroups = {
     Ads: "Ads",
+    Animation: "Animation",
     App: "App",
     Heartbeat: "Heartbeat",
     Input: "Input",

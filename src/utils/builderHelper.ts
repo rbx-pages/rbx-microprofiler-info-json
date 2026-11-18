@@ -10,7 +10,9 @@ export const STR_TagGroups = {
   Render: "Render",
 }
 
-export default {
+export {
   TagDataBuilder,
   TagDataClasses
 }
+
+export default {}

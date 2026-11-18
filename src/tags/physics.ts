@@ -11,6 +11,10 @@ const builder = builderHelper.currentBuilder
 
 // ---
 
+builder.AddTagGroup(
+    new TagGroupEntry(STR_TagGroups.Physics)
+        .SetDescription("Physics")
+)
 
 
 export default {}

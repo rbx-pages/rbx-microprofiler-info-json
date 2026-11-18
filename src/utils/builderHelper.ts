@@ -4,7 +4,7 @@ export const TagTokenEntry = TagDataClasses.TagTokenEntry
 export const TagGroupEntry = TagDataClasses.TagGroupEntry
 export const TagLabel = TagDataClasses.TagLabel
 
-export STR_TagGroups = {
+export const STR_TagGroups = {
   LuaBridge: "LuaBridge",
   Physics: "Physics",
   Render: "Render",

@@ -20,21 +20,6 @@ const builder = builderHelper.currentBuilder
 // Do NOT remove content above
 //
 
-builder.AddTagGroup(
-    new TagGroupEntry("LuaBridge")
-        .SetDescription(`
-            This is LuaBridge!
-            Very cool!
-        `)
-)
-builder.AddTagGroup(
-    new TagGroupEntry("Systems")
-        .SetDescription(`
-            This is Systems!
-        `)
-)
-
-
 builder.AddGenericTagEntries(
     [
         new TagTokenEntry("test")

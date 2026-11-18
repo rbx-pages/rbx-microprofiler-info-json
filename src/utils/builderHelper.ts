@@ -11,6 +11,9 @@ export const STR_TagGroups = {
 export const builderHelper = {
   TagDataBuilder,
   TagDataClasses,
+
+  STR_TagGroups,
+  
   currentBuilder: builder,
 }
 

@@ -3,6 +3,7 @@ import { TagDataBuilder, TagDataClasses } from "../builderOut.js"
 let builder = new TagDataBuilder();
 
 export const STR_TagGroups = {
+    Ads: "Ads",
     App: "App",
     Heartbeat: "Heartbeat",
     Input: "Input",

@@ -1809,6 +1809,9 @@ __export(TagDataProcessing_exports, {
   TagDataRootMeta: () => TagDataRootMeta
 });
 var TagDataRootMeta = class {
+  /**
+   * 
+   */
   constructor(tagRootData_JSON) {
     /**
      * Metadata
@@ -1821,6 +1824,9 @@ var TagDataRootMeta = class {
         LabelReferences: {}
       };
     }
+  }
+  fromJSON(jsonInput) {
+    this.Metadata = jsonInput;
   }
   /**
    * Caching should be possible...
@@ -1843,6 +1849,9 @@ var TagDataRootMeta = class {
     return {
       LabelReferences: labelRefs
     };
+  }
+  toJSON() {
+    return JSON.stringify(this.Metadata);
   }
 };
 export {

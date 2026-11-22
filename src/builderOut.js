@@ -84,7 +84,8 @@ var BaseDocsEntry = class {
    */
   InsertSearchTags(input) {
     var _a3;
-    ((_a3 = this.Data).Tags ?? (_a3.Tags = [])).concat(input);
+    (_a3 = this.Data).Tags ?? (_a3.Tags = []);
+    this.Data.Tags = this.Data.Tags.concat(input);
     return this;
   }
   toJSON(key) {

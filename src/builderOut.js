@@ -1804,6 +1804,10 @@ __publicField(_TagDataBuilder, "_labelPrefix", "label_");
 var TagDataBuilder = _TagDataBuilder;
 
 // src/js/modules/TagInfoData/TagDataProcessing.ts
+var TagDataProcessing_exports = {};
+__export(TagDataProcessing_exports, {
+  TagDataRootMeta: () => TagDataRootMeta
+});
 var TagDataRootMeta = class {
   constructor(tagRootData_JSON) {
     /**
@@ -1844,5 +1848,5 @@ var TagDataRootMeta = class {
 export {
   TagDataBuilder,
   TagDataClasses_exports as TagDataClasses,
-  TagDataRootMeta
+  TagDataProcessing_exports as TagDataProcessing
 };

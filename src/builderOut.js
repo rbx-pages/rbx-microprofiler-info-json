@@ -1641,7 +1641,10 @@ __export(TagDataUtils_exports, {
   TagDataUtils: () => TagDataUtils_exports
 });
 function GetEntryFromTagDataRoot_JSON(data, rootKeyIndexer, nameUID) {
-  return data[rootKeyIndexer][nameUID];
+  if (data[rootKeyIndexer]) {
+    return data[rootKeyIndexer][nameUID];
+  }
+  return void 0;
 }
 function GetDisplayNameFromTagEntry(entryData) {
   if (entryData.DisplayNameRaw)
@@ -1799,7 +1802,47 @@ var _TagDataBuilder = class _TagDataBuilder {
 };
 __publicField(_TagDataBuilder, "_labelPrefix", "label_");
 var TagDataBuilder = _TagDataBuilder;
+
+// src/js/modules/TagInfoData/TagDataProcessing.ts
+var TagDataRootMeta = class {
+  constructor(tagRootData_JSON) {
+    /**
+     * Metadata
+     */
+    __publicField(this, "Metadata");
+    if (tagRootData_JSON)
+      this.Metadata = this.ConstructMetadata(tagRootData_JSON);
+    else {
+      this.Metadata = {
+        LabelReferences: {}
+      };
+    }
+  }
+  /**
+   * Caching should be possible...
+   */
+  ConstructMetadata(tagRootData_JSON) {
+    let _this = this;
+    let labelRefs = {};
+    Object.entries(tagRootData_JSON.TagTokens).forEach(function([k_tagToken, v]) {
+      if (v.LabelUIDs == void 0)
+        return;
+      v.LabelUIDs.forEach(function(k_label) {
+        let keyExists = Object.hasOwn(labelRefs, k_label);
+        if (keyExists) {
+          labelRefs[k_label]?.push(v.NameUID);
+        } else {
+          labelRefs[k_label] = [v.NameUID];
+        }
+      });
+    });
+    return {
+      LabelReferences: labelRefs
+    };
+  }
+};
 export {
   TagDataBuilder,
-  TagDataClasses_exports as TagDataClasses
+  TagDataClasses_exports as TagDataClasses,
+  TagDataRootMeta
 };

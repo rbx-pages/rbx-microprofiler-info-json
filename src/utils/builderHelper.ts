@@ -36,6 +36,8 @@ const builderHelper = {
     STR_TagGroups,
     STR_SearchTags,
 
+    labelPrefix: "label_",
+
     currentBuilder: builder,
 };
 

@@ -22,7 +22,9 @@ export const STR_TagGroups = {
 }
 
 export const STR_SearchTags = {
-    
+    RbxWikiOriginal: "WikiOriginal",
+    NotExamined: "NotExamined",
+    Examined: "Examined",
 }
 
 
@@ -36,7 +38,6 @@ const builderHelper = {
 
     currentBuilder: builder,
 };
-
 
 
 export default builderHelper;

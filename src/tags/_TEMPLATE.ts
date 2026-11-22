@@ -7,6 +7,8 @@ const TagTokenEntry = TagDataClasses.TagTokenEntry
 const TagGroupEntry = TagDataClasses.TagGroupEntry
 const TagLabel = TagDataClasses.TagLabel
 
+const DecimalToRgb = builderHelper.DecimalToRgb
+
 const builder = builderHelper.currentBuilder
 
 // ---

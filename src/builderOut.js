@@ -1636,6 +1636,7 @@ var TagDataUtils_exports = {};
 __export(TagDataUtils_exports, {
   ForEach_TagNameableEntryInRoot: () => ForEach_TagNameableEntryInRoot,
   ForEach_TagNameableEntryInRoot_JSON: () => ForEach_TagNameableEntryInRoot_JSON,
+  GetColorForTagEntry: () => GetColorForTagEntry,
   GetDisplayNameFromTagEntry: () => GetDisplayNameFromTagEntry,
   GetEntryFromTagDataRoot_JSON: () => GetEntryFromTagDataRoot_JSON,
   TagDataUtils: () => TagDataUtils_exports
@@ -1651,6 +1652,33 @@ function GetDisplayNameFromTagEntry(entryData) {
     return entryData.DisplayNameRaw;
   else
     return entryData.NameUID;
+}
+function GetColorForTagEntry(entryData, entryType, rootData) {
+  let colorToReturn = void 0;
+  if (entryData.Color)
+    colorToReturn = entryData.Color;
+  if (entryType != void 0) {
+    switch (entryType) {
+      case "TagTokens": {
+        let tagToken = entryData;
+        if (colorToReturn == void 0) {
+          if (tagToken.GroupUID) {
+            let groupEntry = GetEntryFromTagDataRoot_JSON(
+              rootData,
+              "TagGroups",
+              tagToken.GroupUID
+            );
+            if (groupEntry)
+              colorToReturn = GetColorForTagEntry(groupEntry);
+          }
+        }
+        break;
+      }
+      default:
+        break;
+    }
+  }
+  return colorToReturn;
 }
 function ForEach_TagNameableEntryInRoot_JSON(jsonRootData, forEachCb) {
   for (let entryType of Object.keys(jsonRootData)) {
@@ -1821,15 +1849,22 @@ var TagDataRootMeta = class {
       this.Metadata = this.ConstructMetadata(tagRootData_JSON);
     else {
       this.Metadata = {
-        LabelReferences: {}
+        LabelReferences: {},
+        SearchTagRefs: {}
       };
     }
   }
+  /**
+   * For loading pre-builts.
+   */
   fromJSON(jsonInput) {
     this.Metadata = jsonInput;
   }
+  _PhaseLabelRefs(tagRootData_JSON) {
+    let _this = this;
+  }
   /**
-   * Caching should be possible...
+   * Constructs Metadata from a given root.
    */
   ConstructMetadata(tagRootData_JSON) {
     let _this = this;
@@ -1846,8 +1881,22 @@ var TagDataRootMeta = class {
         }
       });
     });
+    let searchTagRefs = {};
+    ForEach_TagNameableEntryInRoot_JSON(tagRootData_JSON, function(_entryType, tagEntry) {
+      if (!tagEntry.Tags)
+        return;
+      let entryType = _entryType;
+      tagEntry.Tags.forEach(function(str_searchTag) {
+        if (!Object.hasOwn(searchTagRefs, str_searchTag))
+          searchTagRefs[str_searchTag] = {};
+        if (!Object.hasOwn(searchTagRefs[str_searchTag], _entryType))
+          searchTagRefs[str_searchTag][entryType] = [];
+        searchTagRefs[str_searchTag][entryType]?.push(tagEntry.NameUID);
+      });
+    });
     return {
-      LabelReferences: labelRefs
+      LabelReferences: labelRefs,
+      SearchTagRefs: searchTagRefs
     };
   }
   toJSON() {

@@ -48,3 +48,5 @@ let dataJsonStr = builder.toJSON()
 //
 
 fs.writeFileSync( "output.json", JSON.stringify(JSON.parse(dataJsonStr), null, 2) );
+
+fs.writeFileSync( "output_metadata.json", JSON.stringify({}, null, 2) );

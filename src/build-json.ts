@@ -26,7 +26,7 @@ const builder = builderHelper.currentBuilder
 // Do NOT remove content above
 //
 
-builder.AddGenericTagEntries(
+/*builder.AddGenericTagEntries(
     [
         new TagTokenEntry("test")
             .SetDescription("This is test")
@@ -38,16 +38,24 @@ builder.AddGenericTagEntries(
             .SetDescription("This is test3")
             .WithColor([0,0,255]), 
     ]
-)
+)*/
+
+
+//
+// Pre-set code
+//
 
 builder.Finalize()
-let dataJsonStr = builder.toJSON()
+let dataJSON_str = builder.toJSON()
+let dataJSON_parsed = JSON.parse(dataJSON_str)
 
+let newMetadata = new TagDataProcessing.TagDataRootMeta(dataJSON_parsed)
+let metadataJSON_str = newMetadata.toJSON()
 
 //
 // Do NOT remove content below
 //
 
-fs.writeFileSync( "output.json", JSON.stringify(JSON.parse(dataJsonStr), null, 2) );
+fs.writeFileSync( "output.json", JSON.stringify(dataJSON_parsed, null, 2) );
 
-fs.writeFileSync( "output_metadata.json", JSON.stringify({}, null, 2) );
+fs.writeFileSync( "output_metadata.json", JSON.stringify(JSON.parse(metadataJSON_str), null, 2) );

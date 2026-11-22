@@ -1,6 +1,6 @@
-import { TagDataBuilder, TagDataClasses } from "../builderOut.js"
+import { TagDataBuilder, TagDataClasses, TagDataProcessing } from "../builderOut.js"
 
-let builder = new TagDataBuilder();
+let builder = new TagDataBuilder()
 
 export const STR_TagGroups = {
     Ads: "Ads",
@@ -21,13 +21,22 @@ export const STR_TagGroups = {
     Voice: "Voice",
 }
 
-export const builderHelper = {
-  TagDataBuilder,
-  TagDataClasses,
-
-  STR_TagGroups,
-  
-  currentBuilder: builder,
+export const STR_SearchTags = {
+    
 }
+
+
+const builderHelper = {
+    TagDataBuilder,
+    TagDataClasses,
+    TagDataProcessing,
+
+    STR_TagGroups,
+    STR_SearchTags,
+
+    currentBuilder: builder,
+};
+
+
 
 export default builderHelper;

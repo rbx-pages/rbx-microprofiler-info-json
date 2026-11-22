@@ -14,6 +14,7 @@ import builderHelper, {STR_TagGroups} from "./utils/builderHelper.ts"
 
 const TagDataClasses = builderHelper.TagDataClasses
 const TagDataBuilder = builderHelper.TagDataBuilder
+const TagDataProcessing = builderHelper.TagDataProcessing
 
 const TagTokenEntry = TagDataClasses.TagTokenEntry
 const TagGroupEntry = TagDataClasses.TagGroupEntry

@@ -1482,10 +1482,27 @@ builder.AddTagToken(
 Updates position and size for UI elements in an individual \`\`LayerCollector\`\`.
 Can contain a label with information about the relevant UI, along with the amount of Relayouts, Updates and Resizes.
 
+Runs the UI layout system — computes positions and sizes for all dirty GuiObjects.
+The main layout pass that processes the UI tree. Computes AbsolutePosition and AbsoluteSize for every GuiObject with dirty layout.
+
+**Performance notes:** The most expensive UI scope in complex games. Cost depends on:
+- Number of dirty layout nodes (GuiObjects whose properties changed)
+- Depth of the UI hierarchy
+- Use of UIListLayout, UIGridLayout, UIPageLayout (add layout computation)
+- AutomaticSize elements (require multiple layout passes)
+
 ### Advice
 Reduce the amount of UI elements being resized or repositioned,
 such as those managed by UILayout and those tweened with \`\`TweenService\`\`,
 \`\`GuiObject:TweenSize()\`\`, or \`\`GuiObject:TweenPosition()\`\`. Consider using fixed sizes for BillboardGuis.
+
+- Minimize property changes that trigger re-layout (Size, Position, Visible)
+- Use \`\`LayoutOrder\`\` instead of reparenting to reorder elements
+- Avoid deeply nested UI structures
+- Use \`\`AutomaticSize = None\`\` when the size is known
+- Batch UI updates rather than changing many properties across multiple frames
+- Reduce the amount of UI elements being resized or repositioned (via UILayout, TweenService, etc.)
+- Consider fixed sizes for BillboardGuis
 `
         )
         .AddLabel(TagDataBuilder.makeLabelName("updateUILayouts_layoutReport"))

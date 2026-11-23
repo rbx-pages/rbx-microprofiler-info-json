@@ -8,6 +8,7 @@ const TagGroupEntry = TagDataClasses.TagGroupEntry
 const TagLabel = TagDataClasses.TagLabel
 
 const DecimalToRgb = builderHelper.DecimalToRgb
+const makeLabelName = TagDataBuilder.makeLabelName
 
 const builder = builderHelper.currentBuilder
 
@@ -15,7 +16,7 @@ const builder = builderHelper.currentBuilder
 
 builder.AddTagGroup(
     new TagGroupEntry(STR_TagGroups.Physics)
-        .SetDescription("Physics")
+        .SetDescription("Example Group")
 )
 
 

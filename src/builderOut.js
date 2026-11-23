@@ -1742,6 +1742,9 @@ var _TagDataBuilder = class _TagDataBuilder {
     }
     return newBuilder;
   }
+  static makeLabelName(name) {
+    return this._labelPrefix + name;
+  }
   AddTagToken(tagToken) {
     this._EntryMapping["TagTokenEntry"][tagToken.Data.NameUID] = tagToken;
     return this;

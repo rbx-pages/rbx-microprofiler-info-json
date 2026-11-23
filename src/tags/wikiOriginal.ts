@@ -15,6 +15,13 @@ const builder = builderHelper.currentBuilder
 
 builder.AddTagGroup(
     new TagGroupEntry("Sleep")
+        .WithColor(DecimalToRgb(3715294))
+        .SetDescription(
+`
+When threads aren't actively performing tasks, they enter a sleep state, with tags to indicate how long the thread was sleeping.
+At any given time, it's extremely common for most worker threads to be in a sleep state.
+`
+        )
 )
 
 builder.AddTagToken(
@@ -144,6 +151,165 @@ Animators will step forward in currently playing animations.
 ### Advice
 Reduce the amount of \`\`Animators\`\` or animated joints to lower the workload of this step.
 Reduce number of callbacks to animation events such as \`\`AnimationTrack.KeyframeReached\`\` or \`\`AnimationTrack.Ended\`\`
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("RunService.Stepped")
+        .WithDisplayName("gameStepped/RunService.Stepped")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(7029286))
+        .SetDescription(
+`
+Runs functions connected to the \`\`RunService.Stepped\`\` event.
+
+### Advice
+Reduce the amount or workload of functions connected to this event.
+Consider delaying or replacing expensive calculations or spreading computation across multiple frames.
+`
+        )
+)
+
+
+}
+
+
+
+{
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Sound")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Jobs)
+        .WithColor(DecimalToRgb(16744192))
+        .SetDescription(
+`
+Processes acoustic simulation and updates sounds in active playback.
+
+### Advice
+See **Sound** labels below.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Sound/stepInstances")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Sound)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Updates the volume of active sounds in the workspace.
+
+### Advice
+Reduce the amount of sounds in active playback.
+`
+        )
+)
+
+}
+
+
+{
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Net_PacketReceive")
+        .WithDisplayName("Net PacketReceive")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Jobs)
+        .WithColor(DecimalToRgb(5406582))
+        .SetDescription(
+`
+Receives network packets. If many objects or events are being replicated, this step takes longer.
+
+### Advice
+Replicate fewer objects or events.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Replicator_ProcessPackets")
+        .WithDisplayName("Replicator ProcessPackets")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Jobs)
+        .WithColor(DecimalToRgb(5526612))
+        .SetDescription(
+`
+Processes contents of network packets, such as motion, event invocations and property changes.
+
+### Advice
+Reduce the number or size of objects being replicated, or do this in incremental steps.
+May increase if map size increases, as larger maps tend to have more overall activity.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Dispatch_Physics_Senders_and_TouchSenders")
+        .WithDisplayName("Allocate Bandwidth and Run Senders/Dispatch Physics Senders and TouchSenders")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Network)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Sends data about activity in the game.
+
+### Advice
+Reduce the amount of moving objects and/or touches. See following sections.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Dispatch_StreamJob")
+        .WithDisplayName("Allocate Bandwidth and Run Senders/Dispatch StreamJob")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Network)
+        .WithColor(DecimalToRgb(16723791))
+        .SetDescription(
+`
+Sends corresponding specific regions to specific clients in the streaming feature.
+
+### Advice
+Reduce the minimum and target streaming radii.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Dispatch Data Senders")
+        .WithDisplayName("Allocate Bandwidth and Run Senders/Dispatch Data Senders")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal
+        ])
+        .WithGroup(STR_TagGroups.Network)
+        .WithColor(DecimalToRgb(16723791))
+        .SetDescription(
+`
+Sends corresponding specific regions to specific clients in the streaming feature.
+
+### Advice
+Reduce the minimum and target streaming radii.
 `
         )
 )

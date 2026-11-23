@@ -1022,3 +1022,474 @@ Consider delaying or replacing expensive calculations or spreading computation a
 
 
 }
+
+
+
+
+{
+
+builder.AddTagToken(
+    new TagTokenEntry("Distributed_Physics_Ownership")
+        .WithDisplayName("Distributed Physics Ownership")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.NotExamined
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(10079282))
+        .SetDescription(
+`
+Determines whether the server or a client has authority over certain instances such as parts.
+
+### Advice
+Reduce the amount of parts that frequently switch network ownership, especially those with common interaction.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Simulation/assemble")
+        .WithDisplayName("Simulation/assemble")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14408560))
+        .SetDescription(
+`
+Updates a tree of connected objects (assemblies) used by the physics engine.
+
+### Advice
+Reduce the amount of joints being created or destroyed.
+`
+        )
+)
+
+
+
+builder.AddGenericTagEntries([
+    new TagLabel(TagDataBuilder.makeLabelName("highPriorityRate"))
+        .SetDescription(
+`High Priority Rate: {n} %`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("lowPriorityRate"))
+        .SetDescription(
+`Low Priority Rate: {n} %`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("stepsIncludingLowPriority"))
+        .SetDescription(
+`Steps Including Low Priority: {n} %`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("stepsSimulated"))
+        .SetDescription(
+`Steps Simulated: x / out of x (dropped 0.0)`),
+
+    new TagLabel(TagDataBuilder.makeLabelName("stepDt"))
+        .SetDescription(
+`Step dt: {n} ms`)
+])
+
+builder.AddTagToken(
+    new TagTokenEntry("physicsStepped")
+        .WithDisplayName("Simulation/physicsSteppedTotal/physicsStepped")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(8855416))
+        .SetDescription(
+`
+Runs the physics simulation.
+
+Note: Labels may or may not be there.
+
+### Advice
+Reduce the amount and complexity of physically simulated bodies.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("highPriorityRate"))
+        .AddLabel(TagDataBuilder.makeLabelName("lowPriorityRate"))
+        .AddLabel(TagDataBuilder.makeLabelName("stepsIncludingLowPriority"))
+        .AddLabel(TagDataBuilder.makeLabelName("stepsSimulated"))
+        .AddLabel(TagDataBuilder.makeLabelName("stepDt"))
+)
+
+
+
+builder.AddGenericTagEntries([
+    new TagLabel(TagDataBuilder.makeLabelName("broadphaseIslands"))
+        .SetDescription(
+`Broadphase Islands: {n}`
+        ),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("filter_AssemblySetPhase"))
+        .SetDescription(
+`
+There can be one or multiple of these.<br/>
+Filter AssemblySetPhase: {n} - Num Assemblies: {n}
+`
+        )
+])
+
+builder.AddTagToken(
+    new TagTokenEntry("SpatialFilter::filterStep")
+        //.WithDisplayName("")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Updates simulation islands, arranging parts according to network ownership, local simulation.
+Islands are non-interacting groups of parts which can be simulated independently.
+
+### Advice
+Avoid setting network ownership frequently.
+Keep groups of parts far enough away from each other so they can be simulated separately.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("broadphaseIslands"))
+        .AddLabel(TagDataBuilder.makeLabelName("filter_AssemblySetPhase"))
+)
+
+
+builder.AddGenericTagEntries([
+    new TagLabel(TagDataBuilder.makeLabelName("numPrimitiveContacts"))
+        .SetDescription(`numPrimitiveContacts: {n}`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("numTerrainContacts"))
+        .SetDescription(`numTerrainContacts: {n}`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("phys_contacts"))
+        .SetDescription(`contacts: {n}`),
+    
+    new TagLabel(TagDataBuilder.makeLabelName("phys_sleepingContacts"))
+        .SetDescription(`sleeping contacts: {n}`)
+])
+
+builder.AddTagToken(
+    new TagTokenEntry("stepContacts")
+        .WithDisplayName("physicsStepped/worldStep/stepContacts")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9315179))
+        .SetDescription(
+`
+Updates contacts between objects.
+
+### Advice
+Reduce the amount of bodies colliding at once, or use simpler collision boxes.
+Cubes are better than complex meshes.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("numPrimitiveContacts"))
+        .AddLabel(TagDataBuilder.makeLabelName("numTerrainContacts"))
+        .AddLabel(TagDataBuilder.makeLabelName("phys_contacts"))
+        .AddLabel(TagDataBuilder.makeLabelName("phys_sleepingContacts"))
+)
+
+
+builder.AddTagLabel(
+    new TagLabel(TagDataBuilder.makeLabelName("stepWorld_report"))
+        .SetDescription(
+`
+Can contain these or more than one of these.
+buoyancyAccumulators: {n}<br/>
+collisionConnectors: {n}<br/>
+humanoidConnectors: {n}<br/>
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Kernel::stepWorld")
+        //.WithDisplayName("physicsStepped/worldStep/stepWorld")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10040013))
+        .SetDescription(
+`
+Solves physics equations relating to connectors, buoyancy and Humanoids. When the engine is overloaded and unable to simulate everything in real time,
+some steps may be throttled (stepWorldThrottled)
+and only "real-time assemblies" such as Humanoids are simulated.
+
+### Advice
+Depends on where the time is going based on the following three phases:
+- stepContacts: narrow phase collision detection geometry tests.
+- Solver step: integrate time and resolve collisions and other constraints
+- updateBroadphase: update positions of assemblies in collision detection system and find possibly colliding narrow phase pairs.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("stepWorld_report"))
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Kernel::stepWorldThrottled")
+        .AsAliasOf("Kernel::stepWorld")
+)
+
+
+
+builder.AddGenericTagEntries([
+    new TagLabel(TagDataBuilder.makeLabelName("highPriorityAssemblies"))
+        .SetDescription(`High Priority Assemblies {n}`)
+    ,
+    new TagLabel(TagDataBuilder.makeLabelName("lowPriorityAssemblies"))
+        .SetDescription(`Low Priority Assemblies {n}`)
+    ,
+    new TagLabel(TagDataBuilder.makeLabelName("prismForCallbacks"))
+        .SetDescription(`Prims for Callbacks {n}`)
+    ,
+])
+
+builder.AddTagToken(
+    new TagTokenEntry("notifyMovingAssembliesAndPrimMovementCallbacks")
+        //.WithDisplayName("")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9180951))
+        .SetDescription(
+`
+Helps track how long primitives have been sleeping.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("highPriorityAssemblies"))
+        .AddLabel(TagDataBuilder.makeLabelName("lowPriorityAssemblies"))
+        .AddLabel(TagDataBuilder.makeLabelName("prismForCallbacks"))
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("interpolateNetworkedAssemblies")
+        .WithDisplayName("physicsStepped/interpolateNetworkedAssemblies	")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Interpolates assemblies not controlled by the current player.
+
+### Advice
+Set the network owner of parts to the current player to reduce this;
+although this will usually cause more physics work to be done elsewhere.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("handleFallenParts")
+        .WithDisplayName("Simulation/handleFallenParts")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14408560))
+        .SetDescription(
+`
+Removes parts that have fallen below \`\`Workspace.FallenPartsDestroyHeight\`\`.
+
+### Advice
+Lower the destroy height or reduce the amount of parts that fall to the destroy height.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("updateVisuallySleeping")
+        .WithDisplayName("heartbeatInternal/workspaceOnHeartbeat/updateVisuallySleeping")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13612347))
+        .SetDescription(
+`
+Advances each visually-moving part's "steps to sleep" countdown and moves parts that have stopped moving into
+a visually-sleeping state — the second part of
+the moving-assemblies (\`\`notifyMovingAssembliesAndPrimMovementCallbacks\`\`) tracking.
+Parts marked visually sleeping no longer need per-frame transform updates on the render side.
+`
+        )
+)
+
+
+
+builder.AddGenericTagEntries([
+    new TagLabel(TagDataBuilder.makeLabelName("islandCount"))
+        .SetDescription(`Island Count: {n}`)
+        ,
+    new TagLabel(TagDataBuilder.makeLabelName("constraintCount"))
+        .SetDescription(`Constraint Count: {n}`)
+        ,
+    new TagLabel(TagDataBuilder.makeLabelName("simBodyCount"))
+        .SetDescription(`Sim Body Count: {n}`)
+        ,
+    new TagLabel(TagDataBuilder.makeLabelName("nonSimBodyCount"))
+        .SetDescription(`Non-Sim Body Count: {n}`)
+        ,
+    new TagLabel(TagDataBuilder.makeLabelName("LDLComponents"))
+        .SetDescription(`LDL Components: {n}`)
+        ,
+])
+
+builder.AddTagToken(
+    new TagTokenEntry("Solve_Batch")
+        .WithDisplayName("Solve Batch")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13612347))
+        .SetDescription(
+`
+Helps the physics simulation solve batches of objects' motion.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("islandCount"))
+        .AddLabel(TagDataBuilder.makeLabelName("constraintCount"))
+        .AddLabel(TagDataBuilder.makeLabelName("simBodyCount"))
+        .AddLabel(TagDataBuilder.makeLabelName("nonSimBodyCount"))
+        .AddLabel(TagDataBuilder.makeLabelName("LDLComponents"))
+)
+
+}
+
+
+
+
+
+{
+
+/*builder.AddTagToken(
+    new TagTokenEntry("Render/PreRender/UpdateInput")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.NotExamined,
+        ])
+        //.WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(0))
+        .SetDescription(
+`
+Updates and fires all user input related events if the user has performed input since the last frame.
+
+### Advice
+Try and not do too much work directly as you get the input. Consider doing a minimal amount of processing for the input,
+and larger computations should be pushed off to another thread that happens later.
+`
+        )
+)*/
+
+
+builder.AddTagToken(
+    new TagTokenEntry("TweenService")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.UI)
+        .WithColor(DecimalToRgb(9315107))
+        .SetDescription(
+`
+Updates objects being tweened using \`\`TweenService\`\` and calls completion callbacks,
+such as those used provided to \`\`GuiObject:TweenSize()\`\` or \`\`GuiObject:TweenPosition()\`\`.
+
+In the **server**, \`\`TweenService\`\` runs in \`\`RunService.Heartbeat\`\` instead of \`\`RunService.PreRender\`\`.
+
+### Advice
+Reduce the number of objects being tweened using \`\`TweenService\`\` and ensure callbacks do as little work as possible.
+`
+        )
+)
+
+
+
+builder.AddTagToken(
+    new TagTokenEntry("UpdateUILayouts")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(13467442))
+        .SetDescription(
+`
+Updates position and size for UI elements on all enabled \`\`LayerCollectors\`\`.
+
+### Advice
+See **UpdateUILayouts** labels below.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("UpdateUILayouts/Rebuild Z-order list")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+        ])
+        .WithGroup(STR_TagGroups.UI)
+        .WithColor(DecimalToRgb(12088115))
+        .SetDescription(
+`
+Rebuilds the internal Z-order list of UI elements (not to be confused with \`\`GuiObject.ZIndex\`\`)
+in a \`\`LayerCollector\`\` on first render or when a new element is added, removed, or had its \`\`GuiObject.ZIndex\`\` changed.
+
+### Advice
+Reduce the number of UI elements in \`\`LayerCollectors\`\` before first render and avoid frequently changing the parent and
+\`\`GuiObject.ZIndex\`\` of UI elements inside them. The more elements a \`\`LayerCollector\`\` has, the worse it performs.
+`
+        )
+)
+
+
+
+builder.AddTagLabel(
+    new TagLabel(TagDataBuilder.makeLabelName("updateUILayouts_layoutReport"))
+        .SetDescription(
+`
+Example:
+\`\`Context=Rendering Cause=<Instance Name> Root=<Instance Name> Relayouts=0 Updates=0 Resizes=0\`\`
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("UpdateUILayouts/Layout")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined,
+        ])
+        .WithGroup(STR_TagGroups.UI)
+        .WithColor(DecimalToRgb(12088115))
+        .SetDescription(
+`
+Updates position and size for UI elements in an individual \`\`LayerCollector\`\`.
+Can contain a label with information about the relevant UI, along with the amount of Relayouts, Updates and Resizes.
+
+### Advice
+Reduce the amount of UI elements being resized or repositioned,
+such as those managed by UILayout and those tweened with \`\`TweenService\`\`,
+\`\`GuiObject:TweenSize()\`\`, or \`\`GuiObject:TweenPosition()\`\`. Consider using fixed sizes for BillboardGuis.
+`
+        )
+        .AddLabel(TagDataBuilder.makeLabelName("updateUILayouts_layoutReport"))
+)
+
+
+}

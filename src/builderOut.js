@@ -1784,18 +1784,11 @@ var _TagDataBuilder = class _TagDataBuilder {
   }
   /**
    * Generic adding
-   * Although this is a problem.
    * @param entries 
-   * @deprecated
    */
   AddGenericTagEntries(entries) {
     for (let entry of entries) {
-      if (entry instanceof TagTokenEntry)
-        this.AddTagToken(entry);
-      else if (entry instanceof TagGroupEntry)
-        this.AddTagGroup(entry);
-      else if (entry instanceof TagLabel)
-        this.AddTagLabel(entry);
+      this.AddTagEntryGeneric(entry);
     }
     return this;
   }

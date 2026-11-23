@@ -629,7 +629,7 @@ Computation of lighting near the camera.
 Computes dynamic lighting — updates light grid, shadow parameters, and environment lighting.
 Prepares all lighting data needed for the current frame: updates light positions, recomputes the light grid, processes new/removed lights.
 
-**Performance notes: Cost depends on the number of dynamic lights. Many PointLights/SpotLights increase this.
+**Performance notes:** Cost depends on the number of dynamic lights. Many PointLights/SpotLights increase this.
 
 ### Advice
 Manipulate the number of light sources or move the camera less to reduce the time it takes to recalculate lighting.

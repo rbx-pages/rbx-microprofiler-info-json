@@ -1,4 +1,9 @@
-import { TagDataBuilder, TagDataClasses, TagDataProcessing } from "../builderOut.js"
+import { TagDataClasses, TagDataProcessing } from "../../../../js/modules/TagInfoData/exportStuff"
+import { TagDataBuilder } from "../../../../js/modules/TagInfoData/TagDataBuilder"
+
+// It looks like import autocomplete is handled by the closest path?
+
+// ---
 
 let builder = new TagDataBuilder()
 
@@ -31,6 +36,7 @@ export const STR_TagGroups = {
     OverflowGroup: "(OverflowGroup)",
     PerformanceControl: "PerformanceControl",
     Physics: "Physics",
+    Qt: "Qt",
     RakNet: "RakNet",
     Rbf: "Rbf",
     RbxTransport: "RbxTransport",

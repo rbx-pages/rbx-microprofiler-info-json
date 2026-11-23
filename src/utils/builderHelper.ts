@@ -1,8 +1,6 @@
-import { TagDataClasses, TagDataProcessing } from "../../../../js/modules/TagInfoData/exportStuff"
-import { TagDataBuilder } from "../../../../js/modules/TagInfoData/TagDataBuilder"
+import { TagDataBuilder, TagDataClasses, TagDataProcessing } from "../builderOut.js"
 
-// It looks like import autocomplete is handled by the closest path?
-
+// THE ABOVE SHOULD NOT GET OVERWRITTEN
 // ---
 
 let builder = new TagDataBuilder()

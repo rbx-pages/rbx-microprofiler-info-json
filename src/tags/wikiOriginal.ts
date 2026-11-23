@@ -297,22 +297,88 @@ Reduce the minimum and target streaming radii.
 )
 
 builder.AddTagToken(
-    new TagTokenEntry("Dispatch Data Senders")
+    new TagTokenEntry("Dispatch_Data_Senders")
         .WithDisplayName("Allocate Bandwidth and Run Senders/Dispatch Data Senders")
         .InsertSearchTags([
             STR_SearchTags.RbxWikiOriginal
         ])
         .WithGroup(STR_TagGroups.Network)
-        .WithColor(DecimalToRgb(16723791))
+        .WithColor(DecimalToRgb(12088115))
         .SetDescription(
 `
-Sends corresponding specific regions to specific clients in the streaming feature.
+Sends property changes, remote event invocations, \`\`Humanoid\`\` state changes,
+animation state changes, and replication of new instances.
 
 ### Advice
-Reduce the minimum and target streaming radii.
+Reduce the number of replicated changes to the data model.
 `
         )
 )
 
+
+builder.AddTagToken(
+    new TagTokenEntry("Replicator_SendCluster")
+        .WithDisplayName("Replicator SendCluster")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.NotExamined
+        ])
+        .SetDescription(
+`
+Sends Terrain data to clients.
+
+### Advice
+Reduce the amount or size of terrain changes.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("ModelCompleteness_Mega_Job")
+        .WithDisplayName("ModelCompleteness Mega Job")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.NotExamined
+        ])
+        .SetDescription(
+`
+Server only: completeness is an internal concept. When models are completely sent, model completeness events are sent.
+
+### Advice
+Add or remove fewer instances.
+`
+        )
+)
+
+
+
+builder.AddTagLabel(
+    new TagLabel(TagDataBuilder._labelPrefix + "deserializeByteTracker")
+        .SetDescription(
+`
+Format: \`\`ID: <ID> (X bytes remaining)\`\`
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("deserializePacket")
+        .InsertSearchTags([
+            STR_SearchTags.RbxWikiOriginal,
+            STR_SearchTags.Examined
+        ])
+        .WithGroup(STR_TagGroups.Network)
+        .WithColor(DecimalToRgb(5205839))
+        .SetDescription(
+`
+Low-level network packet processing. Prepares for **Replicator/ProcessPackets**.
+
+### Advice
+Send fewer or smaller updates.
+`
+        )
+        .AddLabel(TagDataBuilder._labelPrefix + "deserializeByteTracker")
+)
 
 }

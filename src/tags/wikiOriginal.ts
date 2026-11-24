@@ -1224,6 +1224,13 @@ builder.AddTagToken(
 `
 Updates contacts between objects.
 
+Narrow-phase contact generation — computes exact contact points and normals between colliding shapes.
+
+Runs specialized contact-generation algorithms for each shape-pair type to find contact manifolds.
+
+**Performance notes:** Cost depends on the number of active contact pairs and shape complexity.
+Convex decomposition parts are the most expensive.
+
 ### Advice
 Reduce the amount of bodies colliding at once, or use simpler collision boxes.
 Cubes are better than complex meshes.

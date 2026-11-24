@@ -135,6 +135,15 @@ builder.AddTagToken(
 Reduce the amount of \`\`Humanoids\`\` or disable \`\`Humanoid\`\` states on NPCs that don't need them, 
 such as \`\`Climbing\`\` or \`\`Swimming\`\`.
 Reduce callbacks to \`\`Humanoid.StateChanged\`\` or state changes such as Running or Died.
+
+**Performance notes:** Cost scales linearly with the number of active Humanoids.
+Each humanoid performs raycasts for floor detection and state transitions.
+
+- Reduce the number of spawned NPCs with Humanoids
+- Use SimplePath or custom movement for distant NPCs instead of full Humanoids
+- Set Humanoid state to Dead or disable PlatformStanding for inactive characters
+- Disable Humanoid states that NPCs don't need (e.g. Climbing or Swimming)
+- Reduce callbacks to \`\`Humanoid.StateChanged\`\`, or state changes such as Running or Died
 `
         )
 )

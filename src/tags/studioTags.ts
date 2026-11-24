@@ -41,4 +41,16 @@ builder.AddTagToken(
 )
 
 
+
+builder.AddTagToken(
+    new TagTokenEntry("PrepareStandalone")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(13467442))
+        .SetDescription(
+`Should have something to do with a Plugin that is in the Standalone DataModel
+Is found within Event_::RenderViewUpdate`
+        )
+)
+
+
 export default {}

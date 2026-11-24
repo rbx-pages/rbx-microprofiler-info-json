@@ -1200,7 +1200,7 @@ builder.AddTagLabel(
     new TagLabel(TagDataBuilder.makeLabelName("stepWorld_report"))
         .SetDescription(
 `
-Can contain these or more than one of these.
+Can contain these or more than one of these.<br/>
 buoyancyAccumulators: {n}<br/>
 collisionConnectors: {n}<br/>
 humanoidConnectors: {n}<br/>

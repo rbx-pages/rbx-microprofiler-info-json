@@ -70,7 +70,7 @@ Each prompt requires distance checks, and visible prompts require raycasts for l
 
 **What game creators can do:**
 - Reduce the number of ProximityPrompt instances in the workspace
-- Set RequiresLineOfSight = false on prompts that don't need it (eliminates raycasts)
+- Set \`\`RequiresLineOfSight = false\`\` on prompts that don't need it (eliminates raycasts)
 - Decrease MaxActivationDistance thresholds to reduce the pool of candidates
 - Disable prompts that are far from any player`
         )

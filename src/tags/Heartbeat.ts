@@ -69,10 +69,10 @@ It handles the "best fit" selection when multiple prompts compete for screen spa
 Each prompt requires distance checks, and visible prompts require raycasts for line-of-sight verification.
 
 **What game creators can do:**
-- Reduce the number of ProximityPrompt instances in the workspace
+- Reduce the number of \`\`ProximityPrompt\`\` instances in the workspace
 - Set \`\`RequiresLineOfSight = false\`\` on prompts that don't need it (eliminates raycasts)
-- Decrease MaxActivationDistance thresholds to reduce the pool of candidates
-- Disable prompts that are far from any player`
+- Decrease \`\`MaxActivationDistance\`\` to reduce the pool of candidates
+- Disable prompts that are far from any player
         )
 )
 

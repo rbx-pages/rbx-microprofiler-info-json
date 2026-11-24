@@ -1799,6 +1799,8 @@ var _TagDataBuilder = class _TagDataBuilder {
    * After the entire data is setup
    * this here could process data and expand data.
    * Post-processing
+   * 
+   * Can be tested with _MOCK_TEST in "App"
    */
   Finalize() {
     for (let [key, tagLabel] of Object.entries(this.rootData.TagLabelDefs)) {
@@ -1809,8 +1811,9 @@ var _TagDataBuilder = class _TagDataBuilder {
     TagDataUtils_exports.ForEach_TagNameableEntryInRoot(this.rootData, function(entryType, tagEntry) {
       let docsInfo = tagEntry.Data.DocsInfo ?? void 0;
       if (docsInfo !== void 0 && docsInfo.Description != void 0) {
-        let newDescription = docsInfo.Description.trim();
-        newDescription = x.parse(newDescription, { breaks: true, async: false });
+        let newDescription = docsInfo.Description;
+        newDescription = newDescription.trim();
+        newDescription = x.parse(newDescription, { breaks: false, async: false });
         tagEntry.SetDescription(newDescription);
       }
     });

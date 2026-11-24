@@ -1013,9 +1013,24 @@ builder.AddTagToken(
 `
 Runs functions connected to the \`\`RunService.Heartbeat\`\` event.
 
+This is the Lua-facing \`\`RunService.Heartbeat\`\` event. Game scripts that call \`\`RunService.Heartbeat:Connect(function)\`\` execute here.
+This runs after the internal heartbeat signal.
+
+**Nesting:** Runs immediately after heartbeatInternal in the same frame step.
+
+**Performance notes:** If this scope is wide, game scripts connected to \`\`RunService.Heartbeat\`\` are doing expensive work. Common causes:
+- Complex per-frame Lua logic (NPC AI, custom physics, UI updates)
+- Too many connections to the Heartbeat event
+- Heavy math or table operations in connected functions
+
 ### Advice
 Reduce the amount or workload of functions connected to this event.
 Consider delaying or replacing expensive calculations or spreading computation across multiple frames.
+
+- Move expensive work to \`\`RunService.Stepped\`\` or \`\`RunService.PreSimulation\`\` if it only needs to run at physics rate
+- Throttle per-frame logic (run expensive operations every Nth frame)
+- Use task.defer/task.spawn to spread work across frames
+- Reduce the number of Heartbeat connections by consolidating logic
 `
         )
 )

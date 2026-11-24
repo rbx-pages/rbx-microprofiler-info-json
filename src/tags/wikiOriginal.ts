@@ -160,9 +160,22 @@ builder.AddTagToken(
 `
 Animators will step forward in currently playing animations.
 
+Evaluates all Animator instances — steps animation tracks and produces skeletal poses.
+
+Runs AnimatorParallelManager::stepAll (parallel) or fires the animation signal (serial) to evaluate all playing animation tracks.
+
+**Performance notes:** Cost = (number of characters) × (playing tracks per character) × (bones per track).
+The biggest animation cost in most games.
+
 ### Advice
 Reduce the amount of \`\`Animators\`\` or animated joints to lower the workload of this step.
-Reduce number of callbacks to animation events such as \`\`AnimationTrack.KeyframeReached\`\` or \`\`AnimationTrack.Ended\`\`
+
+- Limit playing animation tracks per character (stop tracks that are fully blended out)
+- Use animation priorities to prevent unnecessary blending
+- Reduce animation on off-screen or distant characters
+- Use fewer bones in rigs when possible
+- Reduce the number of animated joints to lower the workload of this step
+- Reduce callbacks to animation events such as \`\`AnimationTrack.KeyframeReached\`\` or \`\`AnimationTrack.Ended\`\`
 `
         )
 )

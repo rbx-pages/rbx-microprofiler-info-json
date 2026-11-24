@@ -110,6 +110,9 @@ builder.AddTagToken(
 `
 Processing of game-specific objects such as Humanoids, Animations and heartbeat callbacks.
 
+**Performance notes:** Cost is the total work your scripts do in these callbacks; drill into the
+individual \`\`RunService.*\`\` sub-scopes to see which one dominates.
+
 ### Advice
 See **gameStepped** labels below.
 `

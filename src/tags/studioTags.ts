@@ -19,5 +19,26 @@ builder.AddTagGroup(
         .SetDescription("Qt, mostly Roblox Studio")
 )
 
+builder.AddTagLabel(
+    new TagLabel(makeLabelName("Qt_Event_label"))
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Qt_Event")
+        .WithDisplayName("$Event_")
+        .WithGroup(STR_TagGroups.Qt)
+        .WithColor(DecimalToRgb(5526612))
+        .SetDescription(
+`Qt Events.
+They only appear in Roblox Studio and they come with labels that appear to describe their event.`
+        )
+        .AddLabel(makeLabelName("Qt_Event_label"))
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Event_::RenderViewUpdate")
+        .AsAliasOf("Qt_Event")
+)
+
 
 export default {}

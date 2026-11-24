@@ -25,7 +25,7 @@ builder.AddTagLabel(
 
 builder.AddTagToken(
     new TagTokenEntry("Qt_Event")
-        .WithDisplayName("$Event_")
+        .WithDisplayName("$Event")
         .WithGroup(STR_TagGroups.Qt)
         .WithColor(DecimalToRgb(5526612))
         .SetDescription(

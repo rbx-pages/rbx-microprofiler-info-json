@@ -37,9 +37,9 @@ builder.AddTagToken(
 This is the engine-internal heartbeat that notifies services like ProximityPromptService, PointsService,
 and other engine subsystems that a new frame has begun. It passes wall time, game time, and delta values to all connected listeners.
 
-Nesting: Top-level scope on the main thread. All service onHeartbeat callbacks run inside this scope.
+**Nesting:** Top-level scope on the main thread. All service onHeartbeat callbacks run inside this scope.
 
-Performance notes: This is the aggregate of every engine service subscribed to the per-frame heartbeat,
+**Performance notes:** This is the aggregate of every engine service subscribed to the per-frame heartbeat,
 so a wide scope usually means one nested callback dominates — drill into the per-service scopes
 (e.g. proximityPromptOnHeartbeat) to find it.
 Some of this cost scales with your experience's content: for example, the number of active

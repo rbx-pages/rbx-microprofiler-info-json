@@ -1407,6 +1407,21 @@ builder.AddTagToken(
         .SetDescription(
 `
 Helps the physics simulation solve batches of objects' motion.
+
+Solves a batch of constraint islands using the constraint solver.
+
+The main solver work for the traditional physics solver. Iterates over constraints to find forces that satisfy all contacts and joints.
+
+**Performance notes:** This is often the most expensive physics scope. Cost depends on:
+- Number of awake constraint rows (contacts + joints)
+- Solver iteration count
+- Island size and connectivity
+
+**What game creators can do:**
+- Reduce the number of unanchored parts
+- Anchor parts that don't need physics
+- Avoid large piles of parts (creates big islands with many constraints)
+- Use simpler collision fidelity
 `
         )
         .AddLabel(TagDataBuilder.makeLabelName("islandCount"))

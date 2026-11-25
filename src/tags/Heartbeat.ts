@@ -73,6 +73,7 @@ Each prompt requires distance checks, and visible prompts require raycasts for l
 - Set \`\`RequiresLineOfSight = false\`\` on prompts that don't need it (eliminates raycasts)
 - Decrease \`\`MaxActivationDistance\`\` to reduce the pool of candidates
 - Disable prompts that are far from any player
+`
         )
 )
 

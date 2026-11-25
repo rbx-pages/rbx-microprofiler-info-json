@@ -22,6 +22,7 @@ builder.AddTagGroup(
 builder.AddTagToken(
     new TagTokenEntry("Script_ScriptName")
         .WithDisplayName("$Script_<ScriptName>")
+        .WithGroup(STR_TagGroups.Script)
         .SetDescription(
 `
 Timers with these names indicate activity in a script. This gives profiling info about how long a script took to perform.

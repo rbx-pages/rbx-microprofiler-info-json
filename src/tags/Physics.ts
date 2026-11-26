@@ -35,7 +35,8 @@ builder.AddTagToken(
 Top-level fixed-rate simulation frame — orchestrates humanoids, animation, scripts, and physics at 60 Hz.
 
 This is the outermost scope for the fixed-rate simulation step.
-It sequences: PreAnimation scripts → humanoid step → animation → Stepped scripts → IK → PreSimulation scripts → world step → PostSimulation scripts.
+It sequences: PreAnimation scripts → humanoid step → animation → Stepped scripts → IK → PreSimulation scripts →
+world step → PostSimulation scripts.
 Multiple sub-steps may execute per render frame if the physics rate exceeds the render rate.
 
 **Performance notes:** If this scope is wide,
@@ -56,7 +57,8 @@ builder.AddTagToken(
 Top-level fixed-rate simulation frame — orchestrates humanoids, animation, scripts, and physics at 60 Hz.
 
 This is the outermost scope for the fixed-rate simulation step.
-It sequences: PreAnimation scripts → humanoid step → animation → Stepped scripts → IK → PreSimulation scripts → world step → PostSimulation scripts.
+It sequences: PreAnimation scripts → humanoid step → animation → Stepped scripts → IK → PreSimulation scripts →
+world step → PostSimulation scripts.
 Multiple sub-steps may execute per render frame if the physics rate exceeds the render rate.
 
 **Performance notes:** If this scope is wide,
@@ -658,19 +660,191 @@ builder.AddTagToken(
 )
 
 
-// Finalize With Malformed Output Checks ?
+builder.AddTagToken(
+    new TagTokenEntry("Finalize With Malformed Output Checks")
+        .WithGroup(STR_TagGroups.Physics)
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`Integrates the solved positions into the simulated bodies while checking for numerically unstable (exploded) solver output.`
+        )
+)
 
 
 
-// TODO: Add others from there
+builder.AddTagToken(
+    new TagTokenEntry("preContactStepSleepStage")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(16723791))
+        .SetDescription(
+`
+Pre-contact sleep evaluation — determines which assemblies can remain sleeping this frame.
+
+Checks whether sleeping assemblies have been disturbed (new contacts, applied forces) and need to wake up.
+
+**Performance notes:** Fast per-assembly check. Total cost = O(sleeping assemblies with potential contacts).
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("postContactStepSleepStage")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9315179))
+        .SetDescription(
+`
+Post-contact sleep evaluation — puts assemblies to sleep that have settled.
+
+After solving, checks whether active assemblies
+have come to rest (velocity below threshold for enough frames) and can be put to sleep.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("stepAssembliesRecursiveWakePending")
+        .WithDisplayName("preContactStepSleepStage/stepAssembliesRecursiveWakePending")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .SetDescription(
+`
+Wakes assemblies that have pending wake requests (touched by a moving object, force applied, etc.).
+The recursive variant also propagates waking through connected assemblies up to a bounded depth.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("stepAssembliesWakePending")
+        .WithDisplayName("preContactStepSleepStage/stepAssembliesWakePending")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(12088115))
+        .AsAliasOf("stepAssembliesRecursiveWakePending")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("stepAwakeAssemblies")
+        .WithDisplayName("postContactStepSleepStage/stepAwakeAssemblies")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14390128))
+        .SetDescription(
+`
+Iterates over all awake assemblies to check if they should continue being awake.
+`
+        )
+)
 
 
 
+builder.AddTagToken(
+    new TagTokenEntry("sampleAwakeNonSimulatingAssemblies")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14390128))
+        .SetDescription(
+`
+Samples awake assemblies that aren't actively simulating to check if they need to start simulating.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("updateContactSleepState")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(8740418))
+        .SetDescription(
+`
+Updates the sleep state of contacts — removes contacts for sleeping pairs, activates for waking pairs.
+`
+        )
+)
+
+// updateVisuallySleeping
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Generating Islands")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10461023))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Partitions the awake world into independent islands for parallel solving.
+
+Groups connected assemblies (via contacts or joints) into independent islands that can be solved in parallel without synchronization.
+
+**Performance notes:** Cost depends on connectivity. Highly connected scenes (many parts touching) produce fewer,
+larger islands that can't parallelize well.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Repack Islandizer")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Compacts island data structures after topology changes.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Physics_Generating_Tasks")
+        .WithDisplayName("Generating Tasks")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13382297))
+        .SetDescription(
+`
+Creates solver tasks for each island — prepares work items for the constraint solver.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Init Batch Solve")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .SetDescription(
+`
+Initializes batch solving — prepares shared data structures for parallel island solving.
+`
+        )
+)
+
+
+// Solve Batch
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Solve_Batch_Primal")
+        .WithDisplayName("Solve Batch Primal")
+        .WithGroup(STR_TagGroups.Physics)
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Solves a batch of constraint islands using the alternate constraint solver.
+
+An alternate constraint solver that uses iterative methods for robust convergence on complex systems.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Sort Constraints")
+        .WithGroup(STR_TagGroups.Physics)
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Partitions an island's constraints into interior versus exterior groups
+as a preparation step for the alternate (Primal) solver path.
+`
+        )
+)
 
 
 
 const label_LDLPGS_Solver_report = makeLabelName("LDLPGS_Solver_report")
-
 builder.AddGenericTagEntries([
     new TagLabel(label_LDLPGS_Solver_report)
         .SetDescription(
@@ -692,15 +866,1427 @@ builder.AddTagToken(
 `
 https://about.roblox.com/newsroom/2020/08/improving-simulation-performance-advanced-physics-solver
 
-**Finalize contacts** applies narrowphase contact results to the physics kernel —
-adding, updating, or removing contact data and firing touch/untouch events. **Finalize** completes a solver batch:
-it applies the solver's impulse corrections,
-runs the final constraint iterations, and integrates the updated positions and velocities back into the simulated bodies.
+Main constraint solver iteration loop — iterates to convergence.
+
+The core constraint solver. Projects constraints iteratively to find equilibrium forces.
 `
         )
         .AddLabel(label_LDLPGS_Solver_report)
 )
 
+
+
+
+builder.AddTagToken(
+    new TagTokenEntry("LDL Decomp")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(65407))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Decomposes the constraint matrix for efficient solving.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Physics_Apply_forces")
+        .WithDisplayName("Apply forces")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5855659))
+        .SetDescription(
+`
+Evaluates active force objects (such as VectorForce and the legacy body-force movers) and
+accumulates their force and torque onto bodies for later integration.
+These are user-created forces, not constraint forces, and velocities are not updated here.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("ConstructLDLProgram")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs the solver program — builds the computation graph for constraint solving.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("ConstructLDLMxVProgram")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("ConstructLDLProgram")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("LDLMxVProgram::applyInverse")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Applies the inverse of the factored constraint matrix to a residual vector,
+producing impulse corrections during constraint solving.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("LDLMxVProgram::applyInverseLDL")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14390128))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("LDLMxVProgram::applyInverse")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("ConstructBodyShattering")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(8855416))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs body shattering data — splits a body with a large constraint dimension into
+smaller shards to reduce the cost of the direct solve.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("ConstructConnectedComponent")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Identifies connected components in the constraint graph for island decomposition.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("ConstructLinearForceModel")
+        .WithGroup(STR_TagGroups.Physics)
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Builds a part's aerodynamic force model — precomputing the coefficient matrices used to
+evaluate fluid (aerodynamic) forces from the part's surface geometry.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("CreateMinimumLocalFillElimination")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Computes a fill-reducing elimination ordering for the solver by
+greedily eliminating the node with the fewest resulting fill-in edges.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("buildLDLProgram")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Builds the solver's factorization structures from the constraint topology:
+\`buildLDLComponents\` splits the constraint graph into independent components,
+and \`buildLDLProgram\` builds the solve plan for a single component.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("buildLDLComponents")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(7396243))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("buildLDLProgram")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("constructLineGraph")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs the line graph representation of constraint connectivity.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("orderEdgeReductionsInPivotOrder")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5855659))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Prepares the solver's elimination ordering: \`orderPivotsInDepthFirstOrder\` reorders pivots by a depth-first walk of the elimination tree,
+while \`orderEdgeReductionsInPivotOrder\` orients each edge reduction so the factorization uses only the lower-triangular blocks.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("orderPivotsInDepthFirstOrder")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("orderEdgeReductionsInPivotOrder")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("applyDiagonalPreconditioner")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13382297))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Applies diagonal preconditioning to improve solver convergence rate.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::solve2")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Alternate constraint solver entry point — iterates to convergence.
+
+An alternate solver used for complex constraint systems.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::newton")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+One iteration of the alternate solver.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::buildSystem")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs the linearized system of equations for the solver step.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::buildEquations")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::buildSystem")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::linearSolve (variants)")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Solves the linear system within a solver iteration.
+
+Variants:
+- \`(Partition Blocks By Row, Unpack Diagonal)\` — general (non-SIMD) path
+- \`(SIMD Partition Blocks By Row, Unpack Diagonal)\` — SIMD-accelerated variant, used when the island's block layout allows it
+- \`(pure block-diagonal direct solve)\` — fast path used when the system has no off-diagonal blocks (empty lower triangle)
+- \`(two-body direct solve)\` — optimized for simple two-body contacts
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::velocityStage")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Velocity and position correction stages of the alternate solver.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::positionStage")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::velocityStage")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::explicitForces")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Applies explicit (non-constraint) forces before the solve;
+in the current path this is limited to buoyancy for submerged bodies,
+and the scope does no work when fluid forces are disabled.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::buoyancy")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Computes buoyancy forces for submerged bodies in the alternate solver path.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::convergence")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Checks convergence criteria — determines if the solver has reached an acceptable solution.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::warmstart")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Initializes the solver's iteration start point. \`Primal::warmstart\` carries the velocity-stage solution forward
+(blending toward the integrated velocity) as a warm start;
+\`Primal::warmstartPositionStage\` instead zeroes the position-stage solution (a cold start).`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::warmstartPositionStage")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::warmstart")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::sortLowerTriangularBlocks")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Sorts lower-triangular blocks for efficient forward/back substitution.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::bodyData")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Gathers body data (mass, inertia, position) for the solver.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::DualUpdateTerm")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Solver iteration steps for the primal solver — DualUpdateTerm advances the augmented-Lagrangian dual (force) variables per constraint;
+InitializeNewtonIteration sets up per-iteration solver state.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::InitializeNewtonIteration")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::DualUpdateTerm")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::NewtonIterationApplyAero")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Applies aerodynamic forces within a solver iteration.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::StoreOutput")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Stores solver output — packs per-body velocity and position virtual displacements, and stores the solved constraint forces.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::StoreOutputForConstraints")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::StoreOutput")
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::StoreOutputForSimBodies")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Primal::StoreOutput")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("PrimalSolverContext::PrimalSolverContext")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(5526612))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs the primal solver context — allocates working memory and initializes state.
+`
+        )
+)
+
+
+const label_RaycastBatched_report = makeLabelName("RaycastBatched_report")
+builder.AddTagLabel(
+    new TagLabel(label_RaycastBatched_report)
+        .SetDescription(
+`
+#Rays: {n}<br/>
+Ray Length: 4.10
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("RaycastBatched")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(3715294))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Performs a batch of raycasts against the physics world (used by humanoids, sensors, scripts).
+
+**Performance notes:** Cost = O(rays × scene complexity). Raycasts are one of the most common script-driven physics costs.
+
+**What game creators can do:**
+- Reduce raycast frequency (don't raycast every frame if not needed)
+- Use shorter ray lengths
+- Use RaycastParams FilterDescendantsInstances to reduce traversal
+- Avoid raycasting against complex MeshPart geometry
+`
+        )
+        .AddLabel(label_RaycastBatched_report)
+)
+
+
+const label_MaxDistance = makeLabelName("MaxDistance")
+builder.AddTagLabel(
+    new TagLabel(label_MaxDistance)
+        .SetDescription(
+`
+MaxDistance: {n}
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("RaycastBroadphase")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5855659))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Broadphase traversal for raycasts — finds candidate objects along the ray path.
+`
+        )
+        .AddLabel(label_MaxDistance)
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("RaycastTerrain")
+        .WithDisplayName("RaycastBroadphase/RaycastTerrain")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2330216))
+        .SetDescription(
+`
+Raycasts against Smooth Terrain voxel data.
+
+**Performance notes:** Terrain raycasts traverse the terrain spatial structure. Long rays across large terrain areas are expensive.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("RaycastTerrainBatched")
+        .WithDisplayName("RaycastBroadphase/RaycastTerrainBatched")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .AsAliasOf("RaycastTerrain")
+)
+builder.AddTagToken(
+    new TagTokenEntry("raycastAgainstCachedTerrain")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        //.AsAliasOf("RaycastTerrain")
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Shapecast")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Performs a shape cast (swept volume test) — tests if a shape would collide moving along a path.
+
+More expensive than raycasts because the swept shape must test against all potential contacts, not just a thin ray.
+
+**Performance notes:** Significantly more expensive than Raycast. Use sparingly.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("createKDTreeAsyncAndLaunchRaycastTasks")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2330216))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Builds a KDTree and launches batched raycasts used to compute mesh self-occlusion for aerodynamic force calculations.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("buildKDTree")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("createKDTreeAsyncAndLaunchRaycastTasks")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("getHitLocationPartFilterDescendents")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2330216))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Filters raycast results by part hierarchy (respects FilterDescendantsInstances).
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("buildClientRegion3d")
+        //.WithDisplayName("updatePhysicsInstructions/buildClientRegion3d")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Builds the local player's client-side simulation region — computes the simulation radius
+and replication focus used to filter physics networking.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Physics_Interpolation")
+        .WithDisplayName("Interpolation")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5205839))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Interpolates network-replicated assemblies toward their latest received state —
+the per-task worker inside \`interpolateNetworkedAssemblies\`.
+
+This runs in parallel across networked assemblies (bucketed so only a fraction update each step),
+smoothly advancing each replicated assembly and its children toward the state received over the network so
+remote-owned objects move smoothly between updates.
+
+**Performance notes:** Cost = O(moving assemblies). Fast per-body (simple lerp/slerp).
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("interpolateAfterWorldsteps")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10461023))
+        .SetDescription(
+`
+Post-world-step interpolation — updates visual positions after all physics steps in a frame.
+`
+        )
+)
+
+// interpolateNetworkedAssemblies
+
+// notifyMovingAssembliesAndPrimMovementCallbacks
+
+
+
+builder.AddTagToken(
+    new TagTokenEntry("notifyVisuallyMovingPrimitives")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2330147))
+        .SetDescription(
+`
+Notifies the visual system about primitives that are visually moving (for rendering updates).
+
+**Performance notes:** Runs once per part that moved this frame; cost scales with the number of continuously-moving parts.
+
+**What game creators can do:**
+- Reduce the number of parts moving every frame; let physics bodies come to rest (sleep) instead of jittering.
+- Weld groups of parts into a single assembly so they move as one unit rather than many.
+- When moving things from scripts, move a container/model rather than many individual parts.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("primitiveMovedCallback")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14381275))
+        .SetDescription(
+`
+Per-primitive movement callback — updates rendering, streaming, and other systems.
+`
+        )
+)
+
+// onPrimitiveMovementCallbacks
+
+const label_movedPrimitives_report = makeLabelName("movedPrimitives_report")
+builder.AddTagLabel(
+    new TagLabel(label_movedPrimitives_report)
+        .SetDescription(
+`
+ContactWakeAssemblies: {n}, Actually Woke: {n}
+JointWakeAssemblies: {n}, Actually Woke: {n}
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("movedPrimitives")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Processes primitives that moved during parallel interpolation — fires post-move updates and wakes touching assemblies.
+`
+        )
+        .AddLabel(label_movedPrimitives_report)
+)
+builder.AddTagToken(
+    new TagTokenEntry("collectPrimitivesFromMovingAssemblies")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9333539))
+        .SetDescription(
+`
+Processes primitives that moved during parallel interpolation — fires post-move updates and wakes touching assemblies.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("physics_prepareCallbacks")
+        .WithDisplayName("prepareCallbacks")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9180951))
+        .SetDescription(
+`
+Prepares callback data structures before firing movement notifications.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("WorldStepSignal")
+        .WithGroup(STR_TagGroups.Physics)
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Fires the world step signal — notifies all world step observers.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("physics_fireStateChangeEvents")
+        .WithDisplayName("fireStateChangeEvents")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9333539))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Fires Humanoid state change events (e.g., Landing, Freefall, Running transitions).
+`
+        )
+)
+
+const label_motorJointsToReplicate = makeLabelName("motorJointsToReplicate")
+builder.AddTagLabel(
+    new TagLabel(label_motorJointsToReplicate)
+        .SetDescription(
+`
+motorJointsToReplicate size: {n}
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("queueJointGuidsForPropChangedSignals")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14408560))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Queues property-changed signals for joints that were modified by the solver.
+`
+        )
+        .AddLabel(label_motorJointsToReplicate)
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("applyDeferredTerrainChanges")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2321294))
+        .SetDescription(
+`
+Applies queued terrain modifications to the physics representation.
+
+When terrain is edited, changes are batched and applied during the physics step to maintain consistency.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("applyDeferredTerrainChanges/applyDeferredUpdates")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2321294))
+        .AsAliasOf("applyDeferredTerrainChanges")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("deletedTerrainChunks")
+        .WithDisplayName("applyDeferredTerrainChanges/deletedTerrainChunks")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(14408560))
+        .SetDescription(
+`
+Processes removed terrain chunks for the physics representation.
+`
+        )
+)
+
+const label_updatedTerrainChunks_report = makeLabelName("updatedTerrainChunks_report")
+builder.AddTagLabel(
+    new TagLabel(label_updatedTerrainChunks_report)
+        .SetDescription(
+            `Chunks Updated: {n}, OOT Checks: {n}, OOT Overrides: {n}, Chunks Checked: {n}`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("updatedTerrainChunks")
+        .WithDisplayName("applyDeferredTerrainChanges/updatedTerrainChunks")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5205839))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Processes updated terrain chunks for the physics representation.
+`
+        )
+        .AddLabel(label_updatedTerrainChunks_report)
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("cacheCurrentTerrain")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2321294))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Reads and caches terrain voxel data for physics queries.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("readGrid")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2321294))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("cacheCurrentTerrain")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("testClearTerrainWeldsForGatheredCells")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2321294))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Clears terrain weld constraints for cells that have been modified.
+`
+        )
+)
+
+// assemble
+
+
+builder.AddTagToken(
+    new TagTokenEntry("GatherAssemblies")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(2321294))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Gathers the actively-simulating assemblies (and, when not throttling, moving dynamic assemblies) into the broadphase set for this step.
+`
+        )
+)
+
+
+const label_processPendingCollisionAssemblies_report = makeLabelName("processPendingCollisionAssemblies_report")
+builder.AddTagLabel(
+    new TagLabel(label_processPendingCollisionAssemblies_report)
+        .SetDescription(
+`
+#dirtyCollisionStateAssemblies: {n}
+#dirtyNoCollisionJoint: {n}
+#geometryChangedAssemblies: {n}
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("processPendingCollisionAssemblies")
+        .WithDisplayName("Simulation/assemble/processPendingCollisionAssemblies")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(3715294))
+        .InsertSearchTags([STR_SearchTags.Examined])
+        .SetDescription(
+`
+Processes assemblies with pending collision changes —
+\`\`CanCollide\`\` changes, geometry/CollisionFidelity changes, size changes, and NoCollision joint add/remove.
+`
+        )
+        .AddLabel(label_processPendingCollisionAssemblies_report)
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("ResetBroadIslandForAssembly")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(32767))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Resets the broadphase island assignment for an assembly that changed connectivity.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("getAdaptiveBodiesInSolver")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(6266783))
+        .SetDescription(
+`
+Retrieves bodies that use adaptive simulation quality (LOD for physics).
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("computeMassAndIntertia")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Computes mass properties (centroid, volume, inertia tensor) for a single mesh-based part from its own mesh geometry.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("AerodynamicInterpolatorConstruction")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Constructs the aerodynamic force interpolator for wind/drag simulation.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("ReducedMeshAeroForceModelConstruction")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Builds a reduced mesh model for efficient aerodynamic force computation.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("extractAeroMeshFromPrimitive")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Extracts the aerodynamic mesh surface from a primitive shape for drag calculation.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("generateAeroMesh")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+## Aerodynamics
+
+Building a body's aerodynamic model (the \`*Construction\` scopes below and \`generateAeroMesh\`) is one-time setup —
+it runs when a part gains fluid forces or its mesh changes, not every frame. For MeshParts and unions this setup cost
+grows with the mesh's triangle count, so very high-poly meshes take longer to prepare.
+The per-frame aerodynamic force itself runs on a reduced (simplified) model, so its cost stays
+bounded regardless of the source mesh's complexity.
+
+
+**Generates the full aerodynamic mesh for a body.**
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("TurbulenceCoefficientsUpdate")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Updates turbulence coefficients for wind simulation.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("getOccludedMeshDataMTLimited")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(6266783))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Computes wind occlusion data for aerodynamic surfaces (which faces are sheltered).
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("BuoyancyAccumulator::computeForce")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(65407))
+        .SetDescription(
+`
+**Applies the buoyancy force to each body that is in water (floating or submerged).**
+
+Each body's buoyancy force for the frame is computed earlier; this step
+just adds that force into the physics solver for every buoyant body. The per-body cost is constant —
+it does **not** depend on how complex the body's shape is.
+
+**Performance notes:** Cost scales with the *number* of buoyant bodies (parts touching water),
+not their shape complexity. The physics step shows a \`buoyancyAccumulators: N\` label with this count.
+Normally cheap; only notable when a very large number of parts are in water at once.
+
+**What game creators can do:**
+- Reduce the number of parts simultaneously in water
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("KernelJoint::computeForce")
+        .WithDisplayName("stepWorld/KernelJoint::computeForce")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .SetDescription(
+`
+Computes constraint forces for one joint (Motor6D, HingeConstraint, etc.).
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("AtmosphereSensor")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Sensor scopes for various force-computation systems — gather environmental data for force calculations.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("BuoyancySensor")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("AtmosphereSensor")
+)
+builder.AddTagToken(
+    new TagTokenEntry("ControllerPartSensor")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("AtmosphereSensor")
+)
+builder.AddTagToken(
+    new TagTokenEntry("FluidForceSensor")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("AtmosphereSensor")
+)
+
+// workspaceOnHeartbeat
+
+// handleFallenParts
+
+
+builder.AddTagToken(
+    new TagTokenEntry("updateBones")
+        .WithDisplayName("physicsStepped/updateBones")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2330147))
+        .SetDescription(
+`
+Updates dirty attachment-hierarchy constraints after physics solving — refreshes bones and attachment-attached constraints.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("updatePhysicsInstructions")
+        .WithDisplayName("Simulation/updatePhysicsInstructions")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(10079282))
+        .SetDescription(
+`
+Updates physics instruction state for adaptive simulation.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("updatePartCollisions")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(10079282))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Recomputes character part collision data when avatar scaling changes (R15 scaling defaults).
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("SafeMove")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Kinematic movement functions — move parts safely without tunneling through geometry.
+
+SafeMove is the high-level entry point; MoveCoarse does large steps; MoveFine does sub-step refinement.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("MoveCoarse")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("SafeMove")
+)
+builder.AddTagToken(
+    new TagTokenEntry("MoveFine")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("SafeMove")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("collectCharacterParts")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(10079282))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Collects all parts belonging to a character model for physics grouping.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Batch Expansion")
+        .WithDisplayName("Solve Batch/Batch Expansion")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(13467442))
+        .SetDescription(
+`
+Reserves and populates an island batch's working buffers (sim bodies, anchored bodies, constraints)
+for the current solver step.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("ContactManagerPhysicalPropertiesChanged")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(10079282))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Handles physical property changes (friction, elasticity) on existing contacts.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("ContactManagerOnAssemblyAdded")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(6266783))
+        .SetDescription(
+`
+Handles assembly addition/removal from the contact manager.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("ContactManagerOnAssemblyRemoving")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(11904578))
+        .AsAliasOf("ContactManagerOnAssemblyAdded")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("ISR-PhysicsStep::notifyMovingNOURoots")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(5205839))
+        .SetDescription(
+`
+Notifies the Instance State Replicator about moving Network Owner Unit roots for replication.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("ISR-WorkspaceSynchHelper::processQueuedSynchData")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(8855416))
+        .SetDescription(
+`
+Processes queued synchronization data from the ISR system for physics state.
+`
+        )
+)
+
+// SpatialFilter::filterStep
+
+
+builder.AddTagToken(
+    new TagTokenEntry("UpdateControllers")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(16723791))
+        .SetDescription(
+`
+Steps all constraint controllers (VectorForce, LinearVelocity, AlignOrientation, etc.).
+
+Evaluates modern constraint-based body movers and applies their forces/velocities to the solver.
+
+**Performance notes:** Cost proportional to active constraints. Generally well-optimized.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("MeshAssembly-Task")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Builds a body's aerodynamic mesh data on a worker thread (used by fluid-force / buoyancy models), not collision geometry.
+
+Runs asynchronously on worker threads to build/process a body's
+aerodynamic mesh data (e.g. triangle-set occlusion weighting), not collision meshes.
+Fires when a part gains fluid forces or its mesh changes.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("MeshProcessing-Task")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("MeshAssembly-Task")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("generateCollisionGeometry")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(16723791))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Generates the collision representation for a part (e.g. convex decomposition of a mesh)
+used by the physics broad/narrowphase.
+
+**Performance notes:** One-time cost per unique mesh. Cached after generation.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("generateShape")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(16723791))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Generates the collision mesh for a Terrain chunk (smooth-voxel geometry).
+
+**Performance notes:** Runs when terrain is edited or streamed in;
+cost scales with the amount of terrain being (re)meshed.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("physics_generate")
+        .WithDisplayName("generate")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(16723791))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("generateShape")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Aerodynamic Integrator")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Integrates rigid body velocities with aerodynamic force models.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("LadderRaycast")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(2321294))
+        .SetDescription(
+`
+Raycast used to detect ladder surfaces for character climbing state transitions.
+
+**Performance notes:** One spatial query per climbing check.
+Cost rises with dense collision geometry in the character's vicinity.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Kernel::stepIkSolver")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(13467442))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Executes inverse kinematics solving on connectors for kinematic chains.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("NOUSignals")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(7029286))
+        .SetDescription(
+`
+Processes deferred Network Ownership Unit (NOU) signals and joint change callbacks for ownership and spanning tree modifications.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("PGS Solve")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Executes iterative constraint solving on contacts and collisions.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Primal::linearSolve (Partition Blocks By Row, Unpack Diagonal)")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Solves the linear system using row-partitioned blocks with diagonal unpacking.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::linearSolve (SIMD Partition Blocks By Row, Unpack Diagonal)")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+SIMD-accelerated variant of the row-partitioned linear solve — used when the island's diagonal blocks can be processed with SIMD.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::linearSolve (pure block-diagonal direct solve)")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Direct solve for block-diagonal systems — fast path for simple constraint topologies.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Primal::linearSolve (two-body direct solve)")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Optimized direct solve for two-body contact constraints.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("applyInnerBox")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Updates part collision data for avatars to enforce inner box collision constraints based on R15 scaling models.
+`
+        )
+)
+
+// applyJointTransforms
+
+// primitiveMovementCallbacks
+
+builder.AddTagToken(
+    new TagTokenEntry("stepIk")
+        .WithGroup(STR_TagGroups.Physics)
+        //.WithColor(DecimalToRgb(9315107))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Executes the IK dragger physics step including contact stepping and solver updates for IK-controlled bodies.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("stepUiLegacyJoints")
+        .WithGroup(STR_TagGroups.Physics)
+        .WithColor(DecimalToRgb(16723791))
+        .SetDescription(
+`
+Updates legacy kinematic joints (VehicleSeat, SkateBoardPlatform, DynamicRotateJoint) using their stepUi callbacks.
+`
+        )
+)
 
 
 export default {}

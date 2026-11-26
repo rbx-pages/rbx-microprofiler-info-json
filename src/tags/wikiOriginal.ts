@@ -965,8 +965,17 @@ builder.AddTagToken(
 `
 Running functions bound to render step via \`\`RunService:BindToRenderStep()\`\`.
 
+Fires callbacks registered via \`RunService:BindToRenderStep()\` — priority-ordered pre-render callbacks.
+
+Invokes all callbacks registered with specific priorities. These run in priority order (lower number = earlier).
+
+**Performance notes:** Cost = sum of all BindToRenderStep callbacks. If wide, specific callbacks are doing heavy work.
+
 ### Advice
-Ensure functions connected to this event do as little work as possible.
+- Ensure functions connected to this event do as little work as possible.
+- Unbind render step callbacks when not needed
+- Keep bound callbacks minimal (only visual updates)
+- Use appropriate priorities to avoid unnecessary ordering
 `
         )
 )

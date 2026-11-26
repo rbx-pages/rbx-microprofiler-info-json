@@ -1361,6 +1361,8 @@ builder.AddTagToken(
 `
 Removes parts that have fallen below \`\`Workspace.FallenPartsDestroyHeight\`\`.
 
+**Performance notes:** Checks all moving parts against the destroy threshold. Normally fast.
+
 ### Advice
 Lower the destroy height or reduce the amount of parts that fall to the destroy height.
 `

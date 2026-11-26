@@ -11,6 +11,7 @@ export * as OverflowGroup from "./OverflowGroup.ts"
 export * as Physics from "./Physics.ts"
 export * as Render from "./Render.ts"
 export * as Script from "./Script.ts"
+export * as Simulation from "./Simulation.ts"
 export * as Systems from "./Systems.ts"
 export * as UI from "./UI.ts"
 

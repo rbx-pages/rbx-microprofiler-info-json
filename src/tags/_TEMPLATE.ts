@@ -19,5 +19,17 @@ builder.AddTagGroup(
         .SetDescription("Example Group")
 )
 
+/*builder.AddTagToken(
+    new TagTokenEntry("NAME")
+        .WithGroup(STR_TagGroups.Systems)
+        .WithColor(DecimalToRgb(9000))
+        //.InsertSearchTags([])
+        .SetDescription(
+`
+
+`
+        )
+)*/
+
 
 export default {}

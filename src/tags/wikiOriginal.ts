@@ -1311,6 +1311,12 @@ builder.AddTagToken(
         .SetDescription(
 `
 Helps track how long primitives have been sleeping.
+
+Fires movement callbacks for all assemblies that moved this step.
+
+Notifies the rendering system and other listeners that assemblies have new positions.
+
+**Performance notes:** Cost proportional to moving assemblies. If this is expensive, many parts are moving.
 `
         )
         .AddLabel(TagDataBuilder.makeLabelName("highPriorityAssemblies"))

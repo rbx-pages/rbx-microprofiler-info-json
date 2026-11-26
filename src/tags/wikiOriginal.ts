@@ -1327,7 +1327,7 @@ Notifies the rendering system and other listeners that assemblies have new posit
 
 builder.AddTagToken(
     new TagTokenEntry("interpolateNetworkedAssemblies")
-        .WithDisplayName("physicsStepped/interpolateNetworkedAssemblies	")
+        .WithDisplayName("physicsStepped/interpolateNetworkedAssemblies")
         .InsertSearchTags([
             STR_SearchTags.RbxWikiOriginal,
         ])
@@ -1336,6 +1336,10 @@ builder.AddTagToken(
         .SetDescription(
 `
 Interpolates assemblies not controlled by the current player.
+
+Interpolates network-replicated assemblies between received server states.
+
+Smoothly transitions physics objects from their predicted state to server-corrected state.
 
 ### Advice
 Set the network owner of parts to the current player to reduce this;

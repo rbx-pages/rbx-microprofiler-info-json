@@ -429,6 +429,10 @@ builder.AddTagToken(
 `
 Information is gathered from the main thread and updates various data structures used for rendering.
 
+Orchestrates all pre-render scene graph updates: coordinate frame syncing, part invalidation, lighting preparation, and cluster updates.
+
+**Nesting:** Contains SceneUpdater scopes and UI Layout.
+
 ### Advice
 See **Prepare** labels below.
 `

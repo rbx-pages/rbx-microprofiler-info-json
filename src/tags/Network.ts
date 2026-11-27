@@ -1,4 +1,4 @@
-import builderHelper, {STR_TagGroups} from "../utils/builderHelper"
+import builderHelper, {STR_SearchTags, STR_TagGroups} from "../utils/builderHelper"
 
 const TagDataClasses = builderHelper.TagDataClasses
 const TagDataBuilder = builderHelper.TagDataBuilder
@@ -34,7 +34,7 @@ builder.AddTagToken(
     new TagTokenEntry("Force World Assemble")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Forces all pending physics assemblies to be assembled before replication.**
@@ -50,7 +50,7 @@ builder.AddTagToken(
     new TagTokenEntry("PrepopulateMRDs")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Pre-populates MegaReplicator Descriptors for new instances that need replication.**
@@ -66,7 +66,7 @@ builder.AddTagToken(
     new TagTokenEntry("RaiseCompleteness")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Propagates completeness state through the instance hierarchy — determines what clients can see.**
@@ -84,7 +84,7 @@ builder.AddTagToken(
     new TagTokenEntry("Updating Mega World Extents")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Updates the spatial bounds of the replicated world for streaming calculations.**
@@ -98,7 +98,7 @@ builder.AddTagToken(
     new TagTokenEntry("Prepare Physics Rep Assembly List Sync")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Synchronizes the physics replication assembly list with the current world state.**
@@ -112,7 +112,7 @@ builder.AddTagToken(
     new TagTokenEntry("SharedQCleanUp")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Cleans up the shared replication queue — removes completed or expired items.**
@@ -130,7 +130,7 @@ builder.AddTagToken(
     new TagTokenEntry("Deferred MotorAngles update")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Applies previously received, deferred Motor6D angle updates to the physics world (receive side).**
@@ -144,7 +144,7 @@ builder.AddTagToken(
     new TagTokenEntry("GenerateJDIv2")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Generates Join Data Items v2 — prepares replication data for the join snapshot.**
@@ -160,7 +160,7 @@ builder.AddTagToken(
     new TagTokenEntry("Detect Join-Batchable Replicators")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Identifies replicators that can be batched together during join for efficiency.**
@@ -174,7 +174,7 @@ builder.AddTagToken(
     new TagTokenEntry("Prebuild join cache")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Pre-builds cached data for the join snapshot to speed up subsequent joins.**
@@ -188,7 +188,7 @@ builder.AddTagToken(
     new TagTokenEntry("ISR Update Timestamp Offsets")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Updates Instance State Replicator timestamp offsets for clock synchronization.**
@@ -202,7 +202,7 @@ builder.AddTagToken(
     new TagTokenEntry("Dispatch ISR Prep And Send")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Dispatches the ISR (Instance State Replicator) preparation and sending phase.**
@@ -218,7 +218,7 @@ builder.AddTagToken(
     new TagTokenEntry("Update and allocate bandwidth")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Allocates available network bandwidth to replicators based on priority.**
@@ -232,7 +232,7 @@ builder.AddTagToken(
     new TagTokenEntry("Replicator Status Checks")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Checks replicator connection health — detects disconnects and timeout conditions.**
@@ -244,7 +244,7 @@ builder.AddTagToken(
     new TagTokenEntry("Assign Network Object Priorities")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Assigns priorities to network objects based on distance, relevance, and importance.**
@@ -261,7 +261,7 @@ builder.AddTagToken(
     new TagTokenEntry("LR Pull Manager Notify")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Large Replicator pull manager — notifies and generates large data transfers.**
@@ -274,7 +274,7 @@ builder.AddTagToken(
     new TagTokenEntry("LR Pull Manager Generate")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("LR Pull Manager Notify")
 )
 
@@ -282,7 +282,7 @@ builder.AddTagToken(
     new TagTokenEntry("Dispatch Data Senders")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Dispatches all data sender tasks — sends queued replication data to clients.**
@@ -303,7 +303,7 @@ builder.AddTagToken(
     new TagTokenEntry("Send clusters")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Sends terrain data to clients.**
@@ -322,7 +322,7 @@ builder.AddTagToken(
     new TagTokenEntry("Cluster: insufficient buffer to send")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Diagnostic scope — fires when a cluster's data exceeds the send buffer.**
@@ -336,7 +336,7 @@ builder.AddTagToken(
     new TagTokenEntry("Dispatch PhysicsSenders and TouchSenders")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Sends physics state updates (positions, velocities) and touch events to clients.**
@@ -356,7 +356,7 @@ builder.AddTagToken(
     new TagTokenEntry("CompletenessPropagation")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Multi-phase completeness state propagation and finalization.**
@@ -369,14 +369,14 @@ builder.AddTagToken(
     new TagTokenEntry("CompletenessFinalization")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("CompletenessPropagation")
 )
 builder.AddTagToken(
     new TagTokenEntry("CompletenessUpdateExpectedChildren")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("CompletenessPropagation")
 )
 
@@ -384,7 +384,7 @@ builder.AddTagToken(
     new TagTokenEntry("Preserialize network streams")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Pre-serializes network data streams — encodes data ahead of the send phase.**
@@ -403,7 +403,7 @@ builder.AddTagToken(
     new TagTokenEntry("Data Senders")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Sends individual replication items to a specific client.**
@@ -416,7 +416,7 @@ builder.AddTagToken(
     new TagTokenEntry("Send Item")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Data Senders")
 )
 
@@ -425,7 +425,7 @@ builder.AddTagToken(
     new TagTokenEntry("Sending Globals")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Two distinct join-flow scopes: \`Sending Globals\` sends global setup data to a newly-joining client; \`Sending Network Schema\` sends the serialization schema.**
@@ -438,7 +438,7 @@ builder.AddTagToken(
     new TagTokenEntry("Sending Network Schema")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Sending Globals")
 )
 
@@ -446,7 +446,7 @@ builder.AddTagToken(
     new TagTokenEntry("Dispatch StreamJob")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Dispatches the streaming job — determines what to stream in/out based on player position.**
@@ -465,7 +465,7 @@ builder.AddTagToken(
     new TagTokenEntry("StreamJob")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **The actual streaming computation — priority-based instance streaming decisions.**
@@ -486,7 +486,7 @@ builder.AddTagToken(
     new TagTokenEntry("StreamingSolverV2")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **The streaming solver — spatial computation for which instances are in range.**
@@ -500,7 +500,7 @@ builder.AddTagToken(
     new TagTokenEntry("InstanceObjectManager")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Manages instance lifecycle for streaming — creates/destroys instances as they stream in/out.**
@@ -515,7 +515,7 @@ builder.AddTagToken(
     new TagTokenEntry("Replication Foci Streaming")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Manages streaming focus points — where each client is "looking" for streaming purposes.**
@@ -528,14 +528,14 @@ builder.AddTagToken(
     new TagTokenEntry("Foci and Set Changes")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Replication Foci Streaming")
 )
 builder.AddTagToken(
     new TagTokenEntry("Refresh Tracked Location")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Replication Foci Streaming")
 )
 
@@ -544,7 +544,7 @@ builder.AddTagToken(
     new TagTokenEntry("StreamingObserver processBatchedSetMoves")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes batched set membership changes in the streaming observer.**
@@ -564,7 +564,7 @@ builder.AddTagToken(
     new TagTokenEntry("StreamingObserver sets change")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("StreamingObserver processBatchedSetMoves")
 )
 
@@ -572,7 +572,7 @@ builder.AddTagToken(
     new TagTokenEntry("Collect Parts For Min Area")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Collects parts that are within the minimum streaming area (always loaded).**
@@ -586,7 +586,7 @@ builder.AddTagToken(
     new TagTokenEntry("Prefetch Gather From Uncollected Regions")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Prefetches data from regions that haven't been collected yet for proactive streaming.**
@@ -599,7 +599,7 @@ builder.AddTagToken(
     new TagTokenEntry("Replication Foci GC")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Garbage-collects stale replication data — removes objects that are no longer relevant.**
@@ -614,14 +614,14 @@ builder.AddTagToken(
     new TagTokenEntry("GC Loop")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Replication Foci GC")
 )
 builder.AddTagToken(
     new TagTokenEntry("Process Deferred GC")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Replication Foci GC")
 )
 
@@ -630,7 +630,7 @@ builder.AddTagToken(
     new TagTokenEntry("Part/Model Removals")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes pending removal of parts, models, and containers from the replication system.**
@@ -650,21 +650,21 @@ builder.AddTagToken(
     new TagTokenEntry("Foci Removals")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Part/Model Removals")
 )
 builder.AddTagToken(
     new TagTokenEntry("Model Removals")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Part/Model Removals")
 )
 builder.AddTagToken(
     new TagTokenEntry("Container Removals")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Part/Model Removals")
 )
 
@@ -673,7 +673,7 @@ builder.AddTagToken(
     new TagTokenEntry("GC Version Tracking")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Manages version tracking for GC'd instances and cleans up synchronization maps.**
@@ -684,14 +684,14 @@ builder.AddTagToken(
     new TagTokenEntry("DeallocateInstanceVersionsAsync")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GC Version Tracking")
 )
 builder.AddTagToken(
     new TagTokenEntry("DecayInstanceSyncMap")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GC Version Tracking")
 )
 
@@ -700,7 +700,7 @@ builder.AddTagToken(
     new TagTokenEntry("Join Snapshot")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Captures the current world state as a snapshot for a joining player.**
@@ -713,7 +713,7 @@ builder.AddTagToken(
     new TagTokenEntry("Server Join Snapshot")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Join Snapshot")
 )
 
@@ -721,7 +721,7 @@ builder.AddTagToken(
     new TagTokenEntry("GameLoad")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Client-side join-completion handler — fires when the top replication container's 'finished' tag arrives, marking initial game data fully received.**
@@ -737,7 +737,7 @@ builder.AddTagToken(
     new TagTokenEntry("Container Queue")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes the container queue during join — creates instance hierarchies in order.**
@@ -752,7 +752,7 @@ builder.AddTagToken(
     new TagTokenEntry("Performing player install")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Server-side scope for setting up a new player's Player Instance.**
@@ -763,7 +763,7 @@ builder.AddTagToken(
     new TagTokenEntry("Install Remote Player")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Performing player install")
 )
 
@@ -771,7 +771,7 @@ builder.AddTagToken(
     new TagTokenEntry("Getting Replication Cache and Queue JDI")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Retrieves cached replication data and queues Join Data Items for the new player.**
@@ -783,7 +783,7 @@ builder.AddTagToken(
     new TagTokenEntry("RakNetUpdate")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes incoming and outgoing network packets — the transport layer tick.**
@@ -803,7 +803,7 @@ builder.AddTagToken(
     new TagTokenEntry("deserializeItem")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Deserializes individual replication items from the network bitstream.**
@@ -818,7 +818,7 @@ builder.AddTagToken(
     new TagTokenEntry("deserializeClientItem")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("deserializeItem")
 )
 
@@ -826,7 +826,7 @@ builder.AddTagToken(
     new TagTokenEntry("Tag deserialized")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Reads a replication flow-control tag item from the stream (e.g. join-milestone markers).**
@@ -840,7 +840,7 @@ builder.AddTagToken(
     new TagTokenEntry("SettingInstanceAlive")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Marks replication-data instances as alive and complete for a replicator during the join flow.**
@@ -852,7 +852,7 @@ builder.AddTagToken(
     new TagTokenEntry("asyncHttpQueueOnHeartbeat")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes the legacy async HTTP request queue.**
@@ -869,7 +869,7 @@ builder.AddTagToken(
     new TagTokenEntry("contentProviderOnHeartbeat")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes content provider asset loading — handles asset request completion.**
@@ -884,7 +884,7 @@ builder.AddTagToken(
     new TagTokenEntry("cacheableContentProviderOnHeartbeat")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("contentProviderOnHeartbeat")
 )
 
@@ -893,7 +893,7 @@ builder.AddTagToken(
     new TagTokenEntry("HttpRequestAsync")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Individual HTTP request processing scopes.**
@@ -904,14 +904,14 @@ builder.AddTagToken(
     new TagTokenEntry("HttpClientReq")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("HttpRequestAsync")
 )
 builder.AddTagToken(
     new TagTokenEntry("HttpClientTC")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("HttpRequestAsync")
 )
 
@@ -919,7 +919,7 @@ builder.AddTagToken(
     new TagTokenEntry("HttpHandleCacheAsyncWriter")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Writes HTTP response data to RbxStorage asynchronously for caching.**
@@ -931,7 +931,7 @@ builder.AddTagToken(
     new TagTokenEntry("WsClient::workerThreadProcess")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **WebSocket client worker thread — processes incoming WebSocket messages.**
@@ -943,7 +943,7 @@ builder.AddTagToken(
     new TagTokenEntry("ParallelPhysicsReceive")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Processes received physics state in parallel — applies server physics corrections.**
@@ -960,7 +960,7 @@ builder.AddTagToken(
     new TagTokenEntry("InputReplicator::sendInputs")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Sends local player inputs to the server / receives remote player inputs from the server.**
@@ -971,7 +971,7 @@ builder.AddTagToken(
     new TagTokenEntry("InputReplicator::receiveInputs")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("InputReplicator::sendInputs")
 )
 
@@ -980,7 +980,7 @@ builder.AddTagToken(
     new TagTokenEntry("Sort Priorities")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Sorts and refines physics-assembly send priorities for the physics state replication sender.**
@@ -991,7 +991,7 @@ builder.AddTagToken(
     new TagTokenEntry("Further Prioritization")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Sort Priorities")
 )
 
@@ -1000,7 +1000,7 @@ builder.AddTagToken(
     new TagTokenEntry("Network Quality Checks")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Monitors network connection quality and responds to quality-of-service queries.**
@@ -1013,7 +1013,7 @@ builder.AddTagToken(
     new TagTokenEntry("NetworkQualityResponder")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Network Quality Checks")
 )
 
@@ -1021,7 +1021,7 @@ builder.AddTagToken(
     new TagTokenEntry("ISRFinalizeStep")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Finalizes the ISR send step — resets the per-frame change tracking after all replicators have sent.**
@@ -1033,7 +1033,7 @@ builder.AddTagToken(
     new TagTokenEntry("IsrPartialSortMetrics")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Collects metrics about ISR partial sorting performance.**
@@ -1046,7 +1046,7 @@ builder.AddTagToken(
     new TagTokenEntry("GroupManager")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Manages replication groups and sets — organizes instances into replication units.**
@@ -1057,7 +1057,7 @@ builder.AddTagToken(
     new TagTokenEntry("SetManager")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GroupManager")
 )
 
@@ -1066,7 +1066,7 @@ builder.AddTagToken(
     new TagTokenEntry("Game Services Reporting")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Reports game service status and collects job statistics for diagnostics.**
@@ -1077,7 +1077,7 @@ builder.AddTagToken(
     new TagTokenEntry("GetJobStats")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Game Services Reporting")
 )
 
@@ -1086,7 +1086,7 @@ builder.AddTagToken(
     new TagTokenEntry("Network Quality Checks")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Handles disconnection cleanup — removes all replication state for a disconnected client.**
@@ -1097,7 +1097,7 @@ builder.AddTagToken(
     new TagTokenEntry("Disconnect Cleanup")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("Network Quality Checks")
 )
 
@@ -1105,7 +1105,7 @@ builder.AddTagToken(
     new TagTokenEntry("updateMemoryStats")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Updates network memory usage statistics for telemetry.**
@@ -1118,7 +1118,7 @@ builder.AddTagToken(
     new TagTokenEntry("GenerateDataBlobsCacheable")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 **Generates serialized data blobs for different categories of replication data.**
@@ -1131,21 +1131,21 @@ builder.AddTagToken(
     new TagTokenEntry("GenerateDataBlobsNotCacheable")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GenerateDataBlobsCacheable")
 )
 builder.AddTagToken(
     new TagTokenEntry("GenerateDataBlobsCharacterModelRoots")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GenerateDataBlobsCacheable")
 )
 builder.AddTagToken(
     new TagTokenEntry("GenerateDataBlobsParts")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .AsAliasOf("GenerateDataBlobsCacheable")
 )
 
@@ -1153,7 +1153,7 @@ builder.AddTagToken(
     new TagTokenEntry("Packet Processing")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 - \`processPacket\` — processes a single received packet
@@ -1169,7 +1169,7 @@ builder.AddTagToken(
     new TagTokenEntry("ISR Details")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 - \`ISR::preProcessFramePropertyChanges\` — pre-processes property changes before filtering
@@ -1183,7 +1183,7 @@ builder.AddTagToken(
     new TagTokenEntry("Tracker Data")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 - \`Collect TrackerData\` / \`Deferred TrackerData update\` / \`Preserialize TrackerData\` — collects, defers, and pre-serializes tracker data for face/body tracking replication. (\`Gather Post Join\` is a separate instance-streaming step — it collects instance sets that must be sent after a player joins — not tracker data.)
@@ -1195,7 +1195,7 @@ builder.AddTagToken(
     new TagTokenEntry("Streaming Details")
         .WithGroup(STR_TagGroups.Render)
         //.WithColor(DecimalToRgb(9000))
-        //.InsertSearchTags([STR_SearchTags.NotExamined])
+        .InsertSearchTags([STR_SearchTags.NotExamined])
         .SetDescription(
 `
 - \`Streaming Invalidated Caches\` — invalidates streaming caches after topology changes

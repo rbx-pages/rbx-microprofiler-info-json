@@ -16,8 +16,17 @@ const builder = builderHelper.currentBuilder
 
 builder.AddTagGroup(
     new TagGroupEntry(STR_TagGroups.UI)
-        .SetDescription("UI")
+        .SetDescription(
+`
+The UI group contains scopes for GUI layout, styling, text rendering, tweening,
+input hit-testing, localization, and UI data structure maintenance.
+UI work runs primarily on the main thread during the Prepare phase of rendering.
+`
+        )
 )
+
+
+// Layout
 
 
 export default {}

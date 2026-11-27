@@ -1214,7 +1214,7 @@ builder.AddGenericTagEntries([
 `
 Displays the Graphic Setting that was put on.
 
-FRM Quality: <Quality Level>
+FRM Quality: {Quality Level}
 `
                 )
 ])

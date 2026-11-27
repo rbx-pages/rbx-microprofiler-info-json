@@ -2423,7 +2423,7 @@ Renders outline effects (Highlight instance outlines).
 
 const label_FastClusters_report = makeLabelName("FastClusters_report")
 builder.AddGenericTagEntries([
-        new TagLabel(label_numEmitters)
+        new TagLabel(label_FastClusters_report)
                 .SetDescription("Num:{n} PartCount:{n}")
 ])
 

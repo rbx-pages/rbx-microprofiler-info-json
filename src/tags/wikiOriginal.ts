@@ -1576,7 +1576,7 @@ builder.AddTagLabel(
         .SetDescription(
 `
 Example:
-\`\`Context=Rendering Cause=<Instance Name> Root=<Instance Name> Relayouts=0 Updates=0 Resizes=0\`\`
+\`\`Context=Rendering Cause={Instance Name} Root={Instance Name} Relayouts=0 Updates=0 Resizes=0\`\`
 `
         )
 )

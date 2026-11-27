@@ -914,6 +914,13 @@ builder.AddTagToken(
 `
 Forwards to the GPU thread to perform rendering commands.
 
+Presents the rendered frame — swaps the back buffer to the display.
+
+The final step that makes the rendered frame visible. May block if VSync is enabled and the GPU isn't done.
+
+**Performance notes:** If Present is consistently wide, the application is GPU-bound (waiting for the GPU to finish).
+If it's consistently very fast, the application is CPU-bound.
+
 ### Advice
 Reduce scene complexity in general. If this step is taking a long time, you might be limited by the GPU.
 `
@@ -932,9 +939,19 @@ builder.AddTagToken(
 `
 Waits for the GPU to finish rendering the previous frame.
 
+A sync point where the CPU waits for the GPU to complete the previous frame's rendering.
+
+**Performance notes:** If this scope is wide, the application is GPU-bound —
+the GPU has not finished the previous frame's work.
+
 ### Advice
 If this is generally happening a lot then the amount of things rendered is too high. The Frame Rate Manager helps with balancing this,
 but if it remains high, try following performance advice from the individual **Scene** tags.
+
+This is a *symptom*, not a cost in itself —
+the CPU is idle waiting for the GPU. Reducing CPU/script work won't help;
+reduce GPU load instead (see the GPU-group \`Scene\` scope): fewer transparent objects and less overdraw,
+simpler materials, and fewer/cheaper post-effects.
 `
         )
 )

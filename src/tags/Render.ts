@@ -1097,6 +1097,23 @@ initiating loading for any that are missing.
 )
 
 
+// updateInvalidatedFastClusters
+
+
+builder.AddTagToken(
+    new TagTokenEntry("BroadcastInvalidations")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Broadcasts rendering invalidations to all affected subsystems.
+`
+        )
+)
+
+
+
 ////
 
 builder.AddTagToken(

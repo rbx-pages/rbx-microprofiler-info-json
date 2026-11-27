@@ -1328,13 +1328,13 @@ builder.AddTagToken(
     new TagTokenEntry("CopyTexture::LightMap")
         .WithGroup(STR_TagGroups.Render)
         .WithColor(DecimalToRgb(7029286))
-        .AsAliasOf("Copy")
+        .AsAliasOf("Render_Copy_Data")
 )
 builder.AddTagToken(
     new TagTokenEntry("CopyTexture::Skylight")
         .WithGroup(STR_TagGroups.Render)
         .WithColor(DecimalToRgb(2330147))
-        .AsAliasOf("Copy")
+        .AsAliasOf("Render_Copy_Data")
 )
 
 

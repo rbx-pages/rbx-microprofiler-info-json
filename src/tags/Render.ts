@@ -1083,6 +1083,19 @@ Render-thread mesh upload — pops decoded mesh jobs from the upload queue and u
         )
 )
 
+builder.AddTagToken(
+    new TagTokenEntry("CheckAndGetAssets")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+WrapDeformer (layered clothing) asset check — requests the WrapDeformer's body-part and cage meshes,
+initiating loading for any that are missing.
+`
+        )
+)
+
 
 ////
 

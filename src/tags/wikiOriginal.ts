@@ -512,8 +512,17 @@ builder.AddTagToken(
 Prepares "FastCluster" geometries used to render \`\`Humanoids\`\` and skinned \`\`MeshParts\`\`.
 Labels specify the number of parts, vertices, and size of vertices.
 
+Updates fast clusters that were invalidated (part moved, material changed, etc.)
+
+Fast clusters are the instanced rendering batches. When a part in a cluster changes, the cluster must be rebuilt.
+
+**Performance notes:** Cost proportional to invalidated clusters. Frequent part property changes cause frequent rebuilds.
+
 ### Advice
-Reduce visual changes to models with \`\`Humanoids\`\` or skinned \`\`MeshParts\`\`.
+- Avoid changing Color/Material/Size of parts every frame
+- Batch visual changes together
+- Use BeamEffects or Particles instead of rapidly-changing parts
+- Reduce visual changes to models with \`\`Humanoids\`\` or skinned \`\`MeshParts\`\`.
 `
         )
 )

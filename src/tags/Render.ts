@@ -793,6 +793,297 @@ Downsamples the framebuffer for lower-resolution effects (bloom, AO).
 
 
 
+builder.AddTagToken(
+    new TagTokenEntry("Upscale SmootherStep")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Resolution upscaling — renders at lower resolution and upscales for performance.
+
+Different upscaling algorithms with quality/performance tradeoffs:
+- Linear: fastest, lowest quality
+- SmootherStep: balanced
+- Lanczos: high quality, more expensive
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("Upscale Lanczos")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Upscale SmootherStep")
+)
+builder.AddTagToken(
+    new TagTokenEntry("Upscale Linear")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("Upscale SmootherStep")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("renderShadowMap")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Renders the shadow map atlas — generates depth maps from light perspectives.
+
+See the Shadows group for detailed shadow system scopes.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("Shadow Blur")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Blurs shadow maps for soft shadow edges.
+`
+        )
+)
+
+
+
+builder.AddTagToken(
+    new TagTokenEntry("updateTerrainPrepare")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(5526612))
+        .SetDescription(
+`
+Prepares and executes terrain rendering updates (LOD transitions, texture streaming).
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("updateTerrainPerform")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(9333539))
+        .AsAliasOf("updateTerrainPrepare")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("TerrainFeedbackJittered")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Virtual texture feedback passes — determines which terrain texture tiles to load.
+
+Renders a feedback buffer that tells the texture streaming system which virtual texture tiles are needed at what resolution.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("TerrainFeedbackTiled")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("TerrainFeedbackJittered")
+)
+
+
+// AdvSky / AdvSky/Compute
+builder.AddTagToken(
+    new TagTokenEntry("AdvSky")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(14390128))
+        .SetDescription(
+`
+Renders the advanced sky — skybox with atmospheric scattering (sky color, haze, glare).
+AdvSky/Compute is a background-thread step that tessellates the sky mesh and computes per-vertex scattering colors;
+it does no GPU rendering. Volumetric clouds are rendered separately (see Clouds / CloudsComp).
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("AdvSky/Compute")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(8740418))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("AdvSky")
+)
+
+
+
+builder.AddTagToken(
+    new TagTokenEntry("Clouds")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(5406582))
+        .SetDescription(
+`
+Renders volumetric clouds.
+
+**Performance notes:** Can be expensive depending on cloud density and quality settings.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("CloudsComp")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(3715294))
+        .AsAliasOf("Clouds")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("EnvCapture")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Captures the environment map — renders a cube map for reflections.
+
+Periodically re-renders the environment for reflection probes.
+
+**Performance notes:** Renders one face of the reflection cube map per invocation;
+the six faces are amortized across multiple frames (one face per frame).
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("DynamicGeometryManager::processPendingRequests")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(10040013))
+        .SetDescription(
+`
+Processes pending geometry requests — loads/decodes mesh data for rendering.
+
+Processes queued EditableMesh updates (mesh edits submitted through the EditableMesh API) and
+uploads their vertex/index data to GPU buffers.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("DynamicGeometryManager::prepareMeshUpdates")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Prepares mesh updates — processes EditableMesh changes and mesh LOD transitions.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("prepareMeshUpdates::perEditableMesh")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([])
+        .AsAliasOf("DynamicGeometryManager::prepareMeshUpdates")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("DynamicGeometryManager::garbageCollectIncremental")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(5855659))
+        .SetDescription(
+`
+Incrementally garbage-collects unused mesh GPU resources.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("DynamicGeometryManager::prepareConsumerUpdates")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Updates mesh consumer state and reallocates bindings for EditableMesh changes.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("reallocateEditableMeshBinding")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([])
+        .AsAliasOf("DynamicGeometryManager::prepareConsumerUpdates")
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("DynamicGeometryManager::transcodeVerticesAndCalculateBounds (and variants)")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Transcodes mesh vertices from asset format to GPU format and computes bounding boxes.
+
+Variants include: DynamicGeometryManager::transcodeBoxMappedVerticesAndCalculateBounds, DynamicGeometryManager::transcodeFaceFilteredVerticesAndCalculateBounds.
+`
+        )
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("TextureManager::processPendingRequests")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .SetDescription(
+`
+Texture management — loads textures, prepares updates, and garbage-collects unused textures.
+`
+        )
+)
+builder.AddTagToken(
+    new TagTokenEntry("DynamicTextureManager::prepareTextureUpdates")
+        .WithGroup(STR_TagGroups.Render)
+        //.WithColor(DecimalToRgb(9000))
+        .InsertSearchTags([STR_SearchTags.NotExamined])
+        .AsAliasOf("TextureManager::processPendingRequests")
+)
+builder.AddTagToken(
+    new TagTokenEntry("DynamicTextureManager::garbageCollectIncremental")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(13612347))
+        .AsAliasOf("TextureManager::processPendingRequests")
+)
+
+
+builder.AddTagToken(
+    new TagTokenEntry("MeshManager::processPendingRequests")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(32767))
+        .SetDescription(
+`
+Processes pending mesh loading requests.
+`
+        )
+)
+
+builder.AddTagToken(
+    new TagTokenEntry("MeshJob")
+        .WithGroup(STR_TagGroups.Render)
+        .WithColor(DecimalToRgb(2321294))
+        .SetDescription(
+`
+Render-thread mesh upload — pops decoded mesh jobs from the upload queue and uploads their geometry to the GPU.
+`
+        )
+)
+
+
 ////
 
 builder.AddTagToken(

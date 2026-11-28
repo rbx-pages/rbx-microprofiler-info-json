@@ -28,4 +28,24 @@ Jobs appear in the profiler with the format: **\`\`JobName(Priority;ArbiterName)
 )
 
 
+
+builder.AddTagToken(
+    new TagTokenEntry("Replicator_ProcessPackets")
+        .WithDisplayName("Replicator ProcessPackets")
+        .WithGroup(STR_TagGroups.Network)
+        .WithColor(DecimalToRgb(5526612))
+        .SetDescription(
+`
+Processes received network packets — deserializes incoming replication data.
+
+Processes contents of network packets, such as motion, event invocations and property changes.
+
+**What game creators can do:**
+- Reduce the number or size of objects being replicated, or do this in incremental steps.
+May increase if map size increases.
+`
+        )
+)
+
+
 export default {}

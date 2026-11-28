@@ -63,6 +63,17 @@ Sets up the replication metadata for newly-created instances so they can be sent
         )
 )
 
+
+const label_RaiseCompleteness_report = makeLabelName("RaiseCompleteness_report")
+builder.AddGenericTagEntries([
+        new TagLabel(label_RaiseCompleteness_report)
+                .SetDescription(
+`
+\`"Completeness expected raised X/Y"\` — shows how many instances had completeness raised vs total.
+`
+                )
+])
+
 builder.AddTagToken(
     new TagTokenEntry("RaiseCompleteness")
         .WithGroup(STR_TagGroups.Network)
@@ -75,10 +86,9 @@ Completeness tracks which portions of the instance tree are fully replicated to 
 This scope propagates "complete" marks up the tree.
 
 **Performance notes:** Can be expensive during initial join when large hierarchies become complete.
-
-**Labels:** \`"Completeness expected raised X/Y"\` — shows how many instances had completeness raised vs total.
 `
         )
+        .AddLabel(label_RaiseCompleteness_report)
 )
 
 

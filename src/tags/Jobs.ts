@@ -12,7 +12,7 @@ const makeLabelName = TagDataBuilder.makeLabelName
 
 const builder = builderHelper.currentBuilder
 
-// --
+// ---
 
 
 builder.AddTagGroup(

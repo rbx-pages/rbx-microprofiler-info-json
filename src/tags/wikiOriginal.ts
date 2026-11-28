@@ -259,8 +259,10 @@ builder.AddTagToken(
 `
 Receives network packets. If many objects or events are being replicated, this step takes longer.
 
+Receives raw network packets from the transport layer.
+
 ### Advice
-Replicate fewer objects or events.
+- Replicate fewer objects or events.
 `
         )
 )

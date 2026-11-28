@@ -32,7 +32,7 @@ Jobs appear in the profiler with the format: **\`\`JobName(Priority;ArbiterName)
 builder.AddTagToken(
     new TagTokenEntry("Replicator_ProcessPackets")
         .WithDisplayName("Replicator ProcessPackets")
-        .WithGroup(STR_TagGroups.Network)
+        .WithGroup(STR_TagGroups.Jobs)
         .WithColor(DecimalToRgb(5526612))
         .SetDescription(
 `

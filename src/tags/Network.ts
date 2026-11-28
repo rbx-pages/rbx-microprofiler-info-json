@@ -681,7 +681,7 @@ builder.AddTagToken(
     new TagTokenEntry("deserializeClientItem")
         .WithGroup(STR_TagGroups.Network)
         .WithColor(DecimalToRgb(7396243))
-        .AsAliasOf("deserializeItem")
+        .AsAliasOf("Network_deserializeItem")
 )
 
 builder.AddTagToken(

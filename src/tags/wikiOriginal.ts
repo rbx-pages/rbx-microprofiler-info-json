@@ -315,8 +315,18 @@ builder.AddTagToken(
 `
 Sends corresponding specific regions to specific clients in the streaming feature.
 
+Dispatches the streaming job — determines what to stream in/out based on player position.
+
+The main streaming orchestrator. Calculates which instances should be streamed to or from each client based on
+their focus position and streaming radius.
+
+**Performance notes:** Cost depends on world size and streaming density. Runs every frame on the server.
+
 ### Advice
-Reduce the minimum and target streaming radii.
+- Reduce the minimum and target streaming radii.
+- Lower \`Workspace.StreamingTargetRadius\` — the main lever for streaming workload
+(\`StreamingMinRadius\` is the always-loaded floor that never streams out, so lowering it mainly reduces resident content
+rather than this dispatch cost)
 `
         )
 )

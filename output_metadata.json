@@ -1,0 +1,653 @@
+{
+  "LabelReferences": {
+    "label_LuaBridge_whatIsAccessed": [
+      "LuaBridge_index",
+      "LuaBridge_newindex",
+      "LuaBridge_namecall",
+      "LuaBridge_call"
+    ],
+    "label_LuaBridge_callFuncName": [
+      "LuaBridge_namecall",
+      "LuaBridge_call"
+    ],
+    "label_RaiseCompleteness_report": [
+      "RaiseCompleteness"
+    ],
+    "label_SharedQueue_report": [
+      "SharedQCleanUp"
+    ],
+    "label_itemsToPreserialize": [
+      "Preserialize network streams"
+    ],
+    "label_numHumanoidStepped": [
+      "HumanoidParallelManager::stepAll"
+    ],
+    "label_label_numHumanoidAnimators": [
+      "AnimatorParallelManager::stepAll"
+    ],
+    "label_label_totalAnimators": [
+      "AnimatorParallelManager::stepAll"
+    ],
+    "label_label_unthrottledAnimators": [
+      "AnimatorParallelManager::stepAll"
+    ],
+    "label_throttledCount": [
+      "worldStep"
+    ],
+    "label_timestepId": [
+      "worldStep"
+    ],
+    "label_timestepCycleId": [
+      "worldStep"
+    ],
+    "label_stepMidPhase_report": [
+      "stepMidPhase"
+    ],
+    "label_processMidPhaseStepResults_report": [
+      "MidPhase processMidPhaseStepResults"
+    ],
+    "label_filteredAssemblies": [
+      "applyJointTransforms"
+    ],
+    "label_unfilteredAssemblies": [
+      "applyJointTransforms"
+    ],
+    "label_assembledPrimitives": [
+      "primitiveMovementCallbacks"
+    ],
+    "label_LDLPGS_Solver_report": [
+      "LDLPGSSolver::solve"
+    ],
+    "label_RaycastBatched_report": [
+      "RaycastBatched"
+    ],
+    "label_MaxDistance": [
+      "RaycastBroadphase"
+    ],
+    "label_movedPrimitives_report": [
+      "movedPrimitives"
+    ],
+    "label_motorJointsToReplicate": [
+      "queueJointGuidsForPropChangedSignals"
+    ],
+    "label_updatedTerrainChunks_report": [
+      "updatedTerrainChunks"
+    ],
+    "label_processPendingCollisionAssemblies_report": [
+      "processPendingCollisionAssemblies"
+    ],
+    "label_clusters": [
+      "SceneUpdater::updateInstancedClusters2"
+    ],
+    "label_instances": [
+      "SceneUpdater::updateInstancedClusters2"
+    ],
+    "label_updateRenderQueue_report": [
+      "updateRenderQueue"
+    ],
+    "label_renderPass_report": [
+      "DepthPrePass",
+      "UI",
+      "RenderView"
+    ],
+    "label_Scene_report": [
+      "Scene"
+    ],
+    "label_FRM_Quality": [
+      "FrameRateManager::submitCurrentFrame"
+    ],
+    "label_FastCluster_updateGeometry_report": [
+      "FastCluster::updateGeometry"
+    ],
+    "label_numEmitters": [
+      "Emitter estimated boundings"
+    ],
+    "label_numInstances": [
+      "Perform/InstanceGlob"
+    ],
+    "label_FastClusters_report": [
+      "Parallel FastClusters"
+    ],
+    "label_numVisible": [
+      "VisibleQuery"
+    ],
+    "label_destroyGeometry_report": [
+      "destroyGeometry"
+    ],
+    "label_deserializeByteTracker": [
+      "deserializePacket"
+    ],
+    "label_RenderingPrepare_GPU_Time": [
+      "Prepare"
+    ],
+    "label_totalParts": [
+      "SceneUpdater::updateDynamicParts"
+    ],
+    "label_guiCount": [
+      "fillGuiVertices"
+    ],
+    "label_EmittersCount": [
+      "updateParticles"
+    ],
+    "label_ParticlesCount": [
+      "updateParticles"
+    ],
+    "label_drawRenderCount": [
+      "Id_Opaque",
+      "Id_Transparent",
+      "Id_Decals"
+    ],
+    "label_highPriorityRate": [
+      "physicsStepped"
+    ],
+    "label_lowPriorityRate": [
+      "physicsStepped"
+    ],
+    "label_stepsIncludingLowPriority": [
+      "physicsStepped"
+    ],
+    "label_stepsSimulated": [
+      "physicsStepped"
+    ],
+    "label_stepDt": [
+      "physicsStepped"
+    ],
+    "label_broadphaseIslands": [
+      "SpatialFilter::filterStep"
+    ],
+    "label_filter_AssemblySetPhase": [
+      "SpatialFilter::filterStep"
+    ],
+    "label_numPrimitiveContacts": [
+      "stepContacts"
+    ],
+    "label_numTerrainContacts": [
+      "stepContacts"
+    ],
+    "label_phys_contacts": [
+      "stepContacts"
+    ],
+    "label_phys_sleepingContacts": [
+      "stepContacts"
+    ],
+    "label_stepWorld_report": [
+      "Kernel::stepWorld"
+    ],
+    "label_highPriorityAssemblies": [
+      "notifyMovingAssembliesAndPrimMovementCallbacks"
+    ],
+    "label_lowPriorityAssemblies": [
+      "notifyMovingAssembliesAndPrimMovementCallbacks"
+    ],
+    "label_prismForCallbacks": [
+      "notifyMovingAssembliesAndPrimMovementCallbacks"
+    ],
+    "label_islandCount": [
+      "Solve_Batch"
+    ],
+    "label_constraintCount": [
+      "Solve_Batch"
+    ],
+    "label_simBodyCount": [
+      "Solve_Batch"
+    ],
+    "label_nonSimBodyCount": [
+      "Solve_Batch"
+    ],
+    "label_LDLComponents": [
+      "Solve_Batch"
+    ],
+    "label_updateUILayouts_layoutReport": [
+      "UpdateUILayouts/Layout"
+    ],
+    "label_Qt_Event_label": [
+      "Qt_Event"
+    ]
+  },
+  "SearchTagRefs": {
+    "NotExamined": {
+      "TagTokens": [
+        "TS::JobWait",
+        "TS::ArbiterStep",
+        "PreRenderJob",
+        "SimpleRenderStepJob",
+        "InputDispatch",
+        "Replicator SendData",
+        "Replicator StreamData",
+        "Force World Assemble",
+        "PrepopulateMRDs",
+        "GenerateJDIv2",
+        "Detect Join-Batchable Replicators",
+        "Send clusters",
+        "Send Item",
+        "Sending Globals",
+        "Sending Network Schema",
+        "Replication Foci Streaming",
+        "Foci and Set Changes",
+        "Collect Parts For Min Area",
+        "Prefetch Gather From Uncollected Regions",
+        "Replication Foci GC",
+        "Network_GC_Loop",
+        "Network_Process_Deferred_GC",
+        "Part/Model Removals",
+        "Foci Removals",
+        "Model Removals",
+        "Container Removals",
+        "Join Snapshot",
+        "Network_GameLoad",
+        "Performing player install",
+        "Install Remote Player",
+        "Getting Replication Cache and Queue JDI",
+        "Tag deserialized",
+        "SettingInstanceAlive",
+        "HttpRequestAsync",
+        "HttpClientReq",
+        "HttpClientTC",
+        "HttpHandleCacheAsyncWriter",
+        "ParallelPhysicsReceive",
+        "InstanceObjectManager/SetManager",
+        "Disconnect Cleanup",
+        "Packet Processing",
+        "ISR Details",
+        "Tracker Data",
+        "Streaming Details",
+        "gameFixedStepped",
+        "HumanoidParallelManager::updateHumanoidOverlaps",
+        "HumanoidState::doAutoJump",
+        "postParallelBroadphase",
+        "Finalize With Malformed Output Checks",
+        "Generating Islands",
+        "Repack Islandizer",
+        "Solve_Batch_Primal",
+        "Sort Constraints",
+        "LDL Decomp",
+        "ConstructLDLProgram",
+        "ConstructLDLMxVProgram",
+        "LDLMxVProgram::applyInverse",
+        "LDLMxVProgram::applyInverseLDL",
+        "ConstructBodyShattering",
+        "ConstructConnectedComponent",
+        "ConstructLinearForceModel",
+        "CreateMinimumLocalFillElimination",
+        "buildLDLProgram",
+        "buildLDLComponents",
+        "constructLineGraph",
+        "orderEdgeReductionsInPivotOrder",
+        "orderPivotsInDepthFirstOrder",
+        "applyDiagonalPreconditioner",
+        "Primal::solve2",
+        "Primal::newton",
+        "Primal::buildSystem",
+        "Primal::buildEquations",
+        "Primal::linearSolve (variants)",
+        "Primal::velocityStage",
+        "Primal::positionStage",
+        "Primal::explicitForces",
+        "Primal::buoyancy",
+        "Primal::convergence",
+        "Primal::warmstart",
+        "Primal::warmstartPositionStage",
+        "Primal::sortLowerTriangularBlocks",
+        "Primal::bodyData",
+        "Primal::DualUpdateTerm",
+        "Primal::InitializeNewtonIteration",
+        "Primal::NewtonIterationApplyAero",
+        "Primal::StoreOutput",
+        "Primal::StoreOutputForConstraints",
+        "Primal::StoreOutputForSimBodies",
+        "PrimalSolverContext::PrimalSolverContext",
+        "raycastAgainstCachedTerrain",
+        "Shapecast",
+        "createKDTreeAsyncAndLaunchRaycastTasks",
+        "buildKDTree",
+        "getHitLocationPartFilterDescendents",
+        "Physics_Interpolation",
+        "WorldStepSignal",
+        "physics_fireStateChangeEvents",
+        "cacheCurrentTerrain",
+        "readGrid",
+        "testClearTerrainWeldsForGatheredCells",
+        "GatherAssemblies",
+        "ResetBroadIslandForAssembly",
+        "computeMassAndIntertia",
+        "AerodynamicInterpolatorConstruction",
+        "ReducedMeshAeroForceModelConstruction",
+        "extractAeroMeshFromPrimitive",
+        "generateAeroMesh",
+        "TurbulenceCoefficientsUpdate",
+        "getOccludedMeshDataMTLimited",
+        "AtmosphereSensor",
+        "BuoyancySensor",
+        "ControllerPartSensor",
+        "FluidForceSensor",
+        "updatePartCollisions",
+        "SafeMove",
+        "MoveCoarse",
+        "MoveFine",
+        "collectCharacterParts",
+        "ContactManagerPhysicalPropertiesChanged",
+        "MeshAssembly-Task",
+        "MeshProcessing-Task",
+        "generateCollisionGeometry",
+        "generateShape",
+        "physics_generate",
+        "Aerodynamic Integrator",
+        "Kernel::stepIkSolver",
+        "PGS Solve",
+        "Primal::linearSolve (Partition Blocks By Row, Unpack Diagonal)",
+        "Primal::linearSolve (SIMD Partition Blocks By Row, Unpack Diagonal)",
+        "Primal::linearSolve (pure block-diagonal direct solve)",
+        "Primal::linearSolve (two-body direct solve)",
+        "applyInnerBox",
+        "stepIk",
+        "CullView",
+        "BuildView",
+        "BuildDraws",
+        "BuildPass.BatchAndSort",
+        "Render_Dispatch",
+        "DispatchScene.beginRender",
+        "DispatchScene.refreshMeshSubsets",
+        "DispatchSceneFRMBudget",
+        "OpaqueWithAlphaLateDepthPass",
+        "depthPrepass",
+        "alphaPrepass",
+        "mainView",
+        "Scene2D",
+        "GuiScene",
+        "Render_Highlight",
+        "Render_Clear",
+        "DOF",
+        "Depth of Field",
+        "BlurFx",
+        "Image Composition",
+        "Upscale SmootherStep",
+        "Upscale Lanczos",
+        "Upscale Linear",
+        "renderShadowMap",
+        "Shadow Blur",
+        "TerrainFeedbackJittered",
+        "TerrainFeedbackTiled",
+        "AdvSky/Compute",
+        "EnvCapture",
+        "DynamicGeometryManager::prepareMeshUpdates",
+        "DynamicGeometryManager::prepareConsumerUpdates",
+        "DynamicGeometryManager::transcodeVerticesAndCalculateBounds (and variants)",
+        "TextureManager::processPendingRequests",
+        "DynamicTextureManager::prepareTextureUpdates",
+        "CheckAndGetAssets",
+        "BroadcastInvalidations",
+        "AlwaysOnTopAdorns",
+        "Context::beginFrame",
+        "Context::endFrame()",
+        "Context::copyFramebuffer",
+        "Context::generateMipMaps",
+        "Context::resolveFramebuffer",
+        "RTPool::getRT",
+        "Render_Copy",
+        "Render_Copy_Data",
+        "renderHighlightIdPass",
+        "renderMobileHighlightDepthMarkPass",
+        "renderMobileHighlightIdsPass",
+        "renderPerformanceOverlay",
+        "SortQueueJob",
+        "meshTaskJobManager",
+        "UITextureRenderer::renderJob",
+        "UITextureRendererBaseline::renderJob",
+        "EnvMapView::cullJob",
+        "EditableImage::drawImageProjected",
+        "EditableMesh::updateRenderMesh",
+        "EditableMeshData::convertFileMeshDataToEditableMeshData",
+        "EditableMeshUpdateQueue::flushUpdates",
+        "Render_DM",
+        "(Lookup)Build list of new tiles",
+        "BuildDeformedMeshPart",
+        "Dedup sampled chunks",
+        "DrawBlockFilter",
+        "DynamicGeometryManager::prepareMeshUpdates::perEditableMesh",
+        "DynamicGeometryManager::reallocateEditableMeshBinding",
+        "DynamicGeometryManager::transcodeBoxMappedVerticesAndCalculateBounds",
+        "DynamicGeometryManager::transcodeFaceFilteredVerticesAndCalculateBounds",
+        "EditableMeshUpdateQueue::flushUpdates::perEditableMesh",
+        "EnvMapSampleRaycastStep",
+        "EnvMapUpdateStep",
+        "FillSubmitThreadData",
+        "Generate tile update commands",
+        "GetBestTechniques",
+        "Image::scale",
+        "InsertRenderQueue",
+        "relocateGrid",
+        "smoothClusterGetOrCreateChunk",
+        "smoothClusterMarkDirty",
+        "Draw Tiles",
+        "Edge Expansion",
+        "FXCompositing",
+        "Generate Mips Custom",
+        "IndoorSkybox",
+        "MeshReceived",
+        "MotionBuffer",
+        "MotionBuffer Fast Cluster Dispatch",
+        "MotionBuffer Instanced Cluster Dispatch",
+        "MotionBuffer update fast cluster movement",
+        "MotionBuffer update non fast cluster movement",
+        "OpenXrBeginFrame",
+        "OpenXrEndFrame",
+        "UpdateOpenXr",
+        "Outline Effect",
+        "Parse and Layout RichText",
+        "Prepare2dWindow",
+        "PrepareBound",
+        "ProcessUpdaterQueue",
+        "Processes Feedback",
+        "Processes Feedback (bypass)",
+        "RaycastIndoorSingleRay",
+        "RaycastPointsClear",
+        "Render feedback",
+        "RenderTiles",
+        "SSAO",
+        "SSAOApply",
+        "SceneUpdater::invalidatePartMaterial",
+        "Sort active chunks",
+        "SwOcc main loop",
+        "SwOcc setup",
+        "Synthetic feedback",
+        "TextureManager::loadImage",
+        "TextureManager::processTextureQualityChange",
+        "TreeTraversal",
+        "UITextureRendererBaseline::compositeUITextures",
+        "UITextureRendererBaseline::recurseDependencyTree",
+        "UpSample",
+        "Upsample",
+        "UploadingMeshTTMQTelemetry",
+        "UploadingRenderFidelityTelemetry",
+        "ViewportFrameSky",
+        "VrSubmitFrame",
+        "WaitForLock",
+        "acquireFramebuffer",
+        "add tile mips",
+        "asyncGrassTask",
+        "blurRender",
+        "cameraOnHeartbeat",
+        "Render_clear",
+        "computeUploadStaging",
+        "computeUploadStagingOverflow",
+        "copyLockedContent",
+        "count covered pixels",
+        "encodeDXT5",
+        "encodeETC2",
+        "gpuVoxelsPerform",
+        "gpuVoxelsPrepare",
+        "gpuVoxelsProcessChunkTableUpdates",
+        "gpuVoxelsProcessFeedback",
+        "gpuVoxelsProcessRequestedChunks",
+        "gpuVoxelsUpdateCompressedChunkPriorityQueue",
+        "gpuVoxelsUploadSubtree",
+        "invalidateFailedResource",
+        "lightingClearSkylightSunlightChunk",
+        "meshChunk",
+        "occupancyUpdateChunkPerform",
+        "occupancyUpdateChunkPrepare",
+        "processTextureQuality",
+        "queryFrustumEnvMap",
+        "queryResults",
+        "querySphere",
+        "queuePresent",
+        "submitAndFlip",
+        "releaseResources",
+        "remove overflow tiles",
+        "requestMeshContent",
+        "resetCommandPool",
+        "sortUpdates",
+        "synthesize tile requests",
+        "trimMemory",
+        "updateChunk",
+        "updateChunkSkirtMasks",
+        "updateDynamicObjectList",
+        "updateTransitionState",
+        "updatePlaneEffect",
+        "updateTerrainPrepareChangedChunksFilter",
+        "uploadChunk",
+        "videoPresent",
+        "AuroraService::stepPhysics",
+        "AuroraService::onWorldFixedRateTick",
+        "Update Inputs",
+        "fixedRateTickSignal",
+        "AuroraService::prunePredictedInstances",
+        "AuroraService::getCurrentInputFrame",
+        "AuroraService::applyInput",
+        "AuroraService::applyInputFrame",
+        "AuroraService::rollback",
+        "AuroraService::resimulate",
+        "AuroraService::checkServerViewAndRollback",
+        "fixedStepCallbacks",
+        "RunService::getCurrentInputFrame",
+        "ContextActionService::applyInputFrame",
+        "ContextActionService::applyInput",
+        "UpdatePredictedHashes",
+        "FixedSimulationCallbacks",
+        "FixedSimulationCallbacksParallel",
+        "FixedAnimationCallbacks",
+        "FixedAnimationCallbacksParallel",
+        "Replicator_SendCluster",
+        "ModelCompleteness_Mega_Job",
+        "computeLightingPerform/ShadowMapSystem",
+        "Perform/Scene/UI",
+        "Scene/Shadows",
+        "LoadImage",
+        "Distributed_Physics_Ownership"
+      ],
+      "TagLabelDefs": [
+        "label_deserializeByteTracker",
+        "label_RenderingPrepare_GPU_Time"
+      ]
+    },
+    "WikiOriginal": {
+      "TagTokens": [
+        "Replicator_ProcessPackets",
+        "SceneUpdater::updateInstancedClusters2",
+        "updateInvalidParts",
+        "UpdateUILayouts",
+        "Pass2d",
+        "Pass3dAdorn",
+        "queryFrustumOrdered",
+        "updateParticleBoundings",
+        "sleep",
+        "Navigation::rasterizeTile",
+        "Navigation::computePath",
+        "Navigation::getPrimitivesOverlapping",
+        "gameStepped",
+        "stepHumanoid",
+        "stepAnimation",
+        "RunService.Stepped",
+        "Sound",
+        "Sound/stepInstances",
+        "Net_PacketReceive",
+        "Dispatch_Physics_Senders_and_TouchSenders",
+        "Dispatch_StreamJob",
+        "Dispatch_Data_Senders",
+        "Replicator_SendCluster",
+        "ModelCompleteness_Mega_Job",
+        "deserializePacket",
+        "Prepare",
+        "updateInvalidatedFastClusters",
+        "SceneUpdater::updateDynamicParts",
+        "Perform",
+        "fillGuiVertices",
+        "SceneUpdater::computeLightingPerform",
+        "LightGridCPU::LightGridCPU",
+        "computeLightingPerform/ShadowMapSystem",
+        "Perform/Scene/UI",
+        "updateParticles",
+        "Id_Opaque",
+        "Id_Transparent",
+        "Id_Decals",
+        "Scene/Shadows",
+        "Perform/Present",
+        "Perform/Present/waitUntilCompleted",
+        "LoadImage",
+        "fireBindToRenderStepCallbacks",
+        "RunService.RenderStepped",
+        "WaitingHybridScriptJob",
+        "GC",
+        "RunService.Heartbeat",
+        "Distributed_Physics_Ownership",
+        "Simulation/assemble",
+        "physicsStepped",
+        "SpatialFilter::filterStep",
+        "stepContacts",
+        "Kernel::stepWorld",
+        "notifyMovingAssembliesAndPrimMovementCallbacks",
+        "interpolateNetworkedAssemblies",
+        "handleFallenParts",
+        "updateVisuallySleeping",
+        "Solve_Batch",
+        "TweenService",
+        "UpdateUILayouts/Rebuild Z-order list",
+        "UpdateUILayouts/Layout"
+      ]
+    },
+    "Examined": {
+      "TagTokens": [
+        "LuaBridge_index",
+        "LuaBridge_newindex",
+        "LuaBridge_namecall",
+        "LuaBridge_call",
+        "SharedQCleanUp",
+        "Dispatch Data Senders",
+        "Preserialize network streams",
+        "stepMidPhase",
+        "MidPhase processMidPhaseStepResults",
+        "LDLPGSSolver::solve",
+        "RaycastBatched",
+        "RaycastBroadphase",
+        "movedPrimitives",
+        "queueJointGuidsForPropChangedSignals",
+        "updatedTerrainChunks",
+        "processPendingCollisionAssemblies",
+        "SceneUpdater::performUpdateCoordinateFrame",
+        "SceneUpdater::preparePerformUpdateCoordinateFrame",
+        "updateRenderQueue",
+        "FastCluster::updateGeometry",
+        "Emitter estimated boundings",
+        "Perform/InstanceGlob",
+        "Parallel FastClusters",
+        "RenderView",
+        "VisibleQuery",
+        "destroyGeometry",
+        "deserializePacket",
+        "Prepare",
+        "fillGuiVertices",
+        "updateParticles",
+        "Id_Opaque",
+        "Id_Transparent",
+        "Id_Decals",
+        "physicsStepped",
+        "SpatialFilter::filterStep",
+        "stepContacts",
+        "Kernel::stepWorld",
+        "notifyMovingAssembliesAndPrimMovementCallbacks",
+        "Solve_Batch",
+        "UpdateUILayouts/Layout"
+      ]
+    }
+  }
+}
